@@ -1,0 +1,1772 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #0d9488;
+  --color-brand-dark: #0f766e;
+  --color-brand-light: #f0fdfa;
+  --color-canvas: #f8fafc;
+  --color-line: #e2e8f0;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  select {
+    cursor: pointer;
+  }
+  button {
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+  h1 {
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.8px;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+  input:not([type='checkbox']),
+  select,
+  textarea {
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--color-line);
+    border-radius: 9px;
+    background: white;
+    padding: 9px 12px;
+    color: #334155;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: #64748b;
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px #0d948815;
+  }
+  select {
+    padding-right: 34px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2364748b' stroke-width='1.5'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input[type='checkbox'] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--color-brand);
+  }
+}
+
+@layer components {
+  .app-shell {
+    min-height: 100vh;
+  }
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 220px;
+    background: white;
+    border-right: 1px solid var(--color-line);
+    padding: 28px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    z-index: 30;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-brand);
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    padding: 0 8px;
+    min-height: 36px;
+  }
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--color-brand);
+    color: white;
+    flex-shrink: 0;
+  }
+  .sidebar-caption {
+    font-size: 11px;
+    color: #64748b;
+    letter-spacing: 1.6px;
+    margin: 45px 14px 14px;
+    font-weight: 600;
+  }
+  .sidebar nav {
+    display: grid;
+    gap: 7px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 14px;
+    min-height: 45px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 10px;
+  }
+  .nav-link:hover {
+    background: #f8fafc;
+    color: var(--color-brand-dark);
+  }
+  .nav-link.active {
+    background: var(--color-brand-light);
+    color: var(--color-brand-dark);
+    font-weight: 700;
+  }
+  .sidebar-bottom {
+    margin-top: auto;
+    padding-top: 30px;
+  }
+  .clinic-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #64748b;
+    padding: 10px 5px 17px;
+  }
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--color-brand);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid var(--color-line);
+    padding: 18px 4px 0;
+  }
+  .profile strong {
+    display: block;
+    font-size: 12px;
+  }
+  .profile div > span {
+    display: block;
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  .avatar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #f0fdfa;
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .avatar-large {
+    width: 62px;
+    height: 62px;
+    font-size: 20px;
+    background: #ccfbf1;
+  }
+  .main-content {
+    margin-left: 220px;
+    padding: 0 28px 32px;
+    min-height: 100vh;
+  }
+  .page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 102px;
+    padding: 22px 0;
+  }
+  .page-heading > div > p {
+    color: var(--color-muted);
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  .panel {
+    background: white;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: 10px 15px;
+    min-height: 41px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+  .btn-primary {
+    background: var(--color-brand);
+    color: white;
+    box-shadow: 0 2px 3px #0f766e0a;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-brand-dark);
+  }
+  .btn-secondary {
+    background: white;
+    border-color: var(--color-line);
+    color: #334155;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+  .btn-quiet {
+    background: transparent;
+    color: #64748b;
+  }
+  .btn-quiet:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+  }
+  .icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 7px;
+    color: #64748b;
+    background: transparent;
+  }
+  .icon-button:hover {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+  .segmented {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    padding: 4px;
+  }
+  .segmented button {
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #64748b;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .segmented button.selected {
+    color: #0f766e;
+    background: white;
+    box-shadow: 0 1px 3px #0f172a15;
+  }
+  .secondary-text {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 23px;
+  }
+  .stat-card {
+    border: 1px solid var(--color-line);
+    background: white;
+    border-radius: 11px;
+    padding: 17px 18px 16px;
+  }
+  .stat-value {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.9px;
+  }
+  .stat-label {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 10px;
+  }
+  .stat-primary {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: white;
+  }
+  .stat-primary .stat-label {
+    color: #f0fdfa;
+  }
+  .stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+  .stat-icon-0 {
+    background: #ffffff20;
+    color: white;
+  }
+  .stat-icon-1 {
+    background: #fffbeb;
+    color: #b45309;
+  }
+  .stat-icon-2 {
+    background: #f0fdfa;
+    color: #0d9488;
+  }
+  .stat-icon-3 {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+  .agenda-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 264px;
+    align-items: start;
+    gap: 20px;
+  }
+  .calendar-panel {
+    overflow: hidden;
+  }
+  .calendar-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .calendar-toolbar input {
+    min-height: 32px;
+    width: 143px;
+    padding: 5px 8px;
+    border-color: transparent;
+    font-size: 12px;
+  }
+  .calendar-toolbar select {
+    max-width: 190px;
+    min-height: 32px;
+    font-size: 12px;
+    padding-block: 5px;
+  }
+  .calendar-toolbar .btn {
+    min-height: 30px;
+    padding: 5px 10px;
+  }
+  .calendar-scroll {
+    overflow-x: auto;
+  }
+  .calendar-columns-heading {
+    display: flex;
+    height: 68px;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .time-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .dentist-column-title {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    min-width: 0;
+    border-left: 1px solid var(--color-line);
+  }
+  .dentist-column-title strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .dentist-column-title div > span {
+    display: block;
+    color: #64748b;
+    font-size: 11px;
+    margin-top: 3px;
+  }
+  .dentist-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0d9488;
+    flex-shrink: 0;
+  }
+  .dentist-column-title:nth-child(3) .dentist-dot {
+    background: #7c3aed;
+  }
+  .dentist-column-title:nth-child(4) .dentist-dot {
+    background: #2563eb;
+  }
+  .calendar-body {
+    display: flex;
+    position: relative;
+  }
+  .time-column {
+    position: relative;
+    width: 55px;
+    flex-shrink: 0;
+    background: #ffffff;
+  }
+  .time-column > span {
+    position: absolute;
+    right: 11px;
+    color: #64748b;
+    font-size: 11px;
+    padding-top: 7px;
+  }
+  .day-column {
+    position: relative;
+    flex: 1;
+    border-left: 1px solid var(--color-line);
+    min-width: 0;
+  }
+  .calendar-slot {
+    display: block;
+    width: 100%;
+    position: absolute;
+    border: 0;
+    border-bottom: 1px solid #f1f5f9;
+    background: transparent;
+  }
+  .calendar-slot:hover {
+    background: #f0fdfa;
+  }
+  .appointment {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-left: 3px solid;
+    border-radius: 7px;
+    padding: 7px 8px;
+    text-align: left;
+  }
+  .appointment:hover {
+    box-shadow: 0 2px 6px #0f172a10;
+    filter: brightness(0.98);
+  }
+  .appointment-confirmed {
+    background: #f0fdfa;
+    border-left-color: #0d9488;
+  }
+  .appointment-waiting {
+    background: #fffbeb;
+    border-left-color: #d97706;
+  }
+  .appointment-in-progress {
+    background: #ccfbf1;
+    border-left-color: #0d9488;
+  }
+  .appointment-completed {
+    background: #f8fafc;
+    border-left-color: #cbd5e1;
+  }
+  .appointment-cancelled {
+    background: #fef2f2;
+    border-left-color: #dc2626;
+  }
+  .appointment-top {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .appointment-top strong {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #0f172a;
+  }
+  .appointment-top > span {
+    font-size: 11px;
+    white-space: nowrap;
+    color: #0f766e;
+    padding-top: 1px;
+  }
+  .appointment-waiting .appointment-top > span {
+    color: #92400e;
+  }
+  .appointment-completed .appointment-top > span {
+    color: #64748b;
+  }
+  .appointment-description {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .now-line {
+    position: absolute;
+    left: 49px;
+    right: 0;
+    height: 1px;
+    background: #14b8a6;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .now-line > span {
+    display: block;
+    margin-top: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0d9488;
+  }
+  .calendar-footer {
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 13px 16px;
+  }
+  .calendar-footer > span {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .legend-dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .waiting-panel {
+    padding: 19px 15px 14px;
+  }
+  .waiting-panel h2 {
+    font-size: 14px;
+  }
+  .waiting-panel > .secondary-text {
+    font-size: 11px;
+  }
+  .count-badge {
+    background: #fffbeb;
+    color: #b45309;
+    border-radius: 50%;
+    font-size: 11px;
+    min-width: 23px;
+    height: 23px;
+    text-align: center;
+    padding-top: 2px;
+  }
+  .waiting-list {
+    display: grid;
+    gap: 8px;
+    padding: 22px 0;
+  }
+  .waiting-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 9px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: white;
+    width: 100%;
+    text-align: left;
+  }
+  .waiting-item.selected {
+    border-color: #99f6e4;
+    background: #f0fdfa;
+  }
+  .waiting-item .avatar {
+    width: 33px;
+    height: 33px;
+    font-size: 11px;
+    background: #f8fafc;
+    color: #64748b;
+  }
+  .waiting-item.selected .avatar {
+    background: white;
+    color: #0f766e;
+  }
+  .waiting-person {
+    flex: 1;
+    min-width: 0;
+  }
+  .waiting-person > strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .waiting-person > span {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 3px;
+  }
+  .wait-duration {
+    font-size: 11px;
+    white-space: nowrap;
+    color: #64748b;
+  }
+  .waiting-item.selected .wait-duration {
+    color: #92400e;
+  }
+  .waiting-note {
+    margin-top: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .table-toolbar {
+    padding: 19px 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+  }
+  .table-toolbar select {
+    font-size: 12px;
+    width: auto;
+  }
+  .search-input {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--color-line);
+    border-radius: 9px;
+    padding: 0 12px;
+    color: #64748b;
+    background: white;
+    min-width: 200px;
+    max-width: 360px;
+    width: 100%;
+  }
+  .search-input input {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent;
+    padding: 10px 0 !important;
+    min-width: 0;
+    font-size: 12px;
+    outline: none;
+  }
+  .search-input:focus-within {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 3px #0d948815;
+  }
+  .table-scroll {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+  }
+  th {
+    padding: 12px 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    background: #f8fafc;
+    border-block: 1px solid var(--color-line);
+  }
+  td {
+    padding: 16px 20px;
+    font-size: 11px;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  td strong {
+    color: #0f172a;
+    font-weight: 600;
+  }
+  tbody tr:hover {
+    background: #f0fdfa80;
+  }
+  .patient-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    background: transparent;
+    border: 0;
+  }
+  .patient-name > span > strong {
+    display: block;
+    font-size: 12px;
+  }
+  .patient-name > span > span {
+    display: block;
+    font-size: 11px;
+    margin-top: 3px;
+    color: #64748b;
+  }
+  .patient-name:hover strong,
+  .contact-link:hover {
+    color: #0f766e;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    line-height: 1.6;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 4px 9px;
+    white-space: nowrap;
+  }
+  .badge-teal {
+    color: #115e59;
+    background: #ccfbf1;
+  }
+  .badge-slate {
+    color: #475569;
+    background: #f1f5f9;
+  }
+  .badge-amber {
+    color: #92400e;
+    background: #fef3c7;
+  }
+  .badge-red {
+    color: #991b1b;
+    background: #fee2e2;
+  }
+  .table-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 20px;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .dialog {
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: white;
+    width: min(520px, calc(100vw - 32px));
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    color: #0f172a;
+    box-shadow: 0 24px 90px #0f172a30;
+  }
+  .dialog::backdrop {
+    background: #0f172a55;
+    backdrop-filter: blur(3px);
+  }
+  .dialog-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 23px 24px 20px;
+    border-bottom: 1px solid var(--color-line);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: white;
+  }
+  .dialog-heading h2 {
+    font-size: 18px;
+  }
+  .dialog-heading p {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .drawer {
+    margin: 0 0 0 auto;
+    border-radius: 16px 0 0 16px;
+    height: 100dvh;
+    max-height: 100dvh;
+    width: min(450px, 100vw);
+    border-right: 0;
+  }
+  .form-content {
+    padding: 24px;
+    display: grid;
+    gap: 17px;
+  }
+  .field {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+  }
+  .field > span {
+    display: block;
+    font-size: 12px;
+    color: #475569;
+    font-weight: 500;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    font-size: 13px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-line);
+    margin-top: 5px;
+  }
+  .form-section-title {
+    font-size: 11px;
+    color: #0f766e;
+    padding: 8px 0 0;
+  }
+  .drawer-patient {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .drawer-patient h3 {
+    font-size: 16px;
+  }
+  .drawer-patient p {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #475569;
+  }
+  .feedback {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin: 8px 0;
+  }
+  .feedback-error {
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+  .feedback-success {
+    color: #115e59;
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+  }
+  .empty-state {
+    min-height: 260px;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 13px;
+    color: #64748b;
+  }
+  .empty-state h2,
+  .empty-state h3 {
+    color: #334155;
+  }
+  .empty-state p {
+    font-size: 13px;
+  }
+  .empty-state.compact {
+    min-height: 130px;
+    padding: 25px 12px;
+  }
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #0d9488;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .record-picker {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 1px 0 20px;
+  }
+  .record-picker .field {
+    width: 280px;
+  }
+  .record-picker > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 12px;
+    font-size: 11px;
+  }
+  .record-content {
+    display: grid;
+    gap: 20px;
+  }
+  .patient-summary {
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .patient-summary h2 {
+    font-size: 20px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+  }
+  .patient-summary .secondary-text {
+    font-size: 11px;
+  }
+  .patient-alerts {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .primary-dentist {
+    display: grid;
+    border-left: 1px solid var(--color-line);
+    padding-left: 20px;
+    gap: 5px;
+  }
+  .primary-dentist strong {
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .section-heading .secondary-text {
+    margin-top: 3px;
+    font-size: 11px;
+  }
+  .odontogram {
+    padding: 21px 24px 15px;
+  }
+  .tooth-legend {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 18px 0 12px;
+  }
+  .tooth-legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .tooth-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--tooth-color);
+    border: 1px solid var(--tooth-color);
+    flex-shrink: 0;
+  }
+  .tooth-healthy {
+    --tooth-color: #0d9488;
+    --tooth-bg: #ffffff;
+  }
+  .tooth-restoration {
+    --tooth-color: #2563eb;
+    --tooth-bg: #dbeafe;
+  }
+  .tooth-endo {
+    --tooth-color: #d97706;
+    --tooth-bg: #fef3c7;
+  }
+  .tooth-extraction {
+    --tooth-color: #dc2626;
+    --tooth-bg: #fee2e2;
+  }
+  .tooth-crown {
+    --tooth-color: #7c3aed;
+    --tooth-bg: #ede9fe;
+  }
+  .tooth-implant {
+    --tooth-color: #059669;
+    --tooth-bg: #d1fae5;
+  }
+  .tooth-dot.tooth-healthy {
+    background: white;
+  }
+  .odontogram-scroll {
+    overflow-x: auto;
+  }
+  .dental-chart {
+    width: 725px;
+    max-width: 100%;
+    min-width: 640px;
+    margin: auto;
+    padding-top: 3px;
+  }
+  .teeth-row {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr) 12px repeat(8, 1fr);
+    gap: 3px;
+    margin-bottom: 10px;
+  }
+  .tooth-midline {
+    grid-column: 10;
+  }
+  .tooth-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px 0;
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+    color: var(--tooth-color);
+  }
+  .tooth-button:hover {
+    background: #f1f5f9;
+  }
+  .tooth-number {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 3px;
+  }
+  .tooth-button svg {
+    width: 33px;
+    height: 40px;
+  }
+  .tooth-shape {
+    fill: var(--tooth-bg);
+    stroke: var(--tooth-color);
+    stroke-width: 1.3;
+  }
+  .tooth-detail {
+    stroke: var(--tooth-color);
+    stroke-width: 1;
+    opacity: 0.55;
+  }
+  .lower-teeth .tooth-number {
+    order: 2;
+    margin-bottom: 0;
+    margin-top: 4px;
+  }
+  .lower-teeth svg {
+    transform: rotate(180deg);
+  }
+  .dental-orientation {
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 11px;
+    padding: 0 8px;
+    margin-top: 6px;
+  }
+  .record-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .record-tabs > button {
+    background: white;
+    color: #64748b;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 10px 17px;
+    font-size: 12px;
+  }
+  .record-tabs > button.active {
+    background: #0d9488;
+    color: white;
+    border-color: #0d9488;
+    font-weight: 600;
+  }
+  .record-tabs > button:hover:not(.active) {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+  .evolution-list {
+    display: grid;
+    gap: 12px;
+  }
+  .evolution-card {
+    display: grid;
+    grid-template-columns: 105px 190px minmax(180px, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+  }
+  .evolution-date {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .timeline-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0d9488;
+  }
+  .evolution-dentist {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .evolution-dentist .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+  .evolution-dentist strong {
+    font-size: 11px;
+    display: block;
+    font-weight: 600;
+  }
+  .evolution-dentist span:not(.avatar) {
+    font-size: 11px;
+    color: #64748b;
+    display: block;
+    margin-top: 3px;
+  }
+  .evolution-card > p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #64748b;
+  }
+  .muted-count {
+    margin-left: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+  }
+  .anamnesis-panel {
+    overflow: hidden;
+  }
+  .anamnesis-panel > .section-heading {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .tooth-options {
+    gap: 8px;
+  }
+  .tooth-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 13px 15px;
+    text-align: left;
+  }
+  .tooth-option.selected,
+  .tooth-option:hover {
+    border-color: #0d9488;
+    background: #f0fdfa;
+  }
+  .tooth-option svg {
+    margin-left: auto;
+    color: #0f766e;
+  }
+  .tooth-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background: #f0fdfa;
+    color: #0f766e;
+    font-weight: 700;
+  }
+  .text-button {
+    background: transparent;
+    color: #0f766e;
+    border: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px;
+  }
+  .text-button:hover {
+    text-decoration: underline;
+  }
+  .treatment-total {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 35px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 0 0 12px 12px;
+  }
+  .treatment-total > span {
+    display: grid;
+    font-size: 11px;
+    color: #64748b;
+    gap: 4px;
+  }
+  .treatment-total strong {
+    font-size: 17px;
+    color: #0f172a;
+  }
+  .prescription-list {
+    display: grid;
+    gap: 15px;
+  }
+  .prescription-card {
+    padding: 22px;
+  }
+  .prescription-card > p {
+    padding: 20px 0;
+    color: #475569;
+    font-size: 13px;
+  }
+  .prescription-signature {
+    padding-top: 15px;
+    border-top: 1px solid var(--color-line);
+    font-size: 11px;
+    color: #64748b;
+  }
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: #f0fdfa;
+    color: #0f766e;
+    border-radius: 10px;
+  }
+  .dentists-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .dentist-card {
+    padding: 23px;
+  }
+  .dentist-card h2 {
+    font-size: 17px;
+    margin-top: 20px;
+  }
+  .dentist-specialty {
+    color: #0f766e;
+    font-size: 12px;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+  .dentist-contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 11px;
+    margin: 23px 0 16px;
+    overflow-wrap: anywhere;
+  }
+  .dentist-contact:hover {
+    color: #0f766e;
+  }
+  .dentist-patients {
+    border-top: 1px solid var(--color-line);
+    padding: 17px 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .dentist-patients strong {
+    color: #0f172a;
+  }
+  .dentist-patients svg {
+    color: #0f766e;
+    margin-right: 3px;
+  }
+  .settings-form {
+    max-width: 1050px;
+    display: grid;
+    gap: 22px;
+  }
+  .settings-panel {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr);
+    gap: 24px;
+    padding: 26px;
+  }
+  .settings-section-intro {
+    display: flex;
+    gap: 15px;
+    align-items: start;
+  }
+  .settings-section-intro p {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 6px;
+    max-width: 220px;
+  }
+  .settings-fields {
+    display: grid;
+    gap: 19px;
+  }
+  .settings-form > .form-actions {
+    margin-top: 0;
+    border: 0;
+    padding-top: 0;
+  }
+  .mobile-header,
+  .sidebar-overlay {
+    display: none;
+  }
+  .skip-link {
+    position: fixed;
+    top: -70px;
+    left: 10px;
+    background: #0f766e;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    top: 10px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .main-content {
+    padding-inline: 38px;
+  }
+  .appointment-top strong {
+    font-size: 13px;
+  }
+  .appointment-top > span {
+    font-size: 11px;
+  }
+  .appointment-description {
+    font-size: 11px;
+  }
+}
+@media (max-width: 1180px) {
+  .main-content {
+    padding-inline: 22px;
+  }
+  .agenda-layout {
+    grid-template-columns: minmax(0, 1fr) 235px;
+    gap: 15px;
+  }
+  .page-heading {
+    flex-wrap: wrap;
+    gap: 17px;
+  }
+  .evolution-card {
+    grid-template-columns: 100px 175px 1fr;
+  }
+  .evolution-card > .badge {
+    display: none;
+  }
+  .dentists-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dentist-card {
+    padding: 20px;
+  }
+  .table-toolbar {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 960px) {
+  .sidebar {
+    width: 190px;
+    padding-inline: 12px;
+  }
+  .main-content {
+    margin-left: 190px;
+    padding-inline: 20px;
+  }
+  .brand {
+    font-size: 17px;
+  }
+  .agenda-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .waiting-panel {
+    width: 100%;
+  }
+  .waiting-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 15px 0;
+  }
+  .waiting-note {
+    font-size: 11px;
+  }
+  .stat-card {
+    padding: 14px;
+  }
+  .stat-label {
+    font-size: 11px;
+  }
+  .stat-icon {
+    width: 27px;
+    height: 27px;
+  }
+  .stat-value {
+    font-size: 25px;
+  }
+  .primary-dentist {
+    margin-left: auto;
+  }
+  .patient-alerts {
+    margin-left: 0;
+  }
+  .settings-panel {
+    grid-template-columns: 1fr;
+  }
+  .settings-section-intro p {
+    max-width: none;
+  }
+  .evolution-card {
+    grid-template-columns: 105px 1fr;
+    gap: 12px;
+  }
+  .evolution-card > p {
+    grid-column: 1 / -1;
+  }
+  .record-picker > span {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  h1 {
+    font-size: 22px;
+  }
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--color-line);
+    background: white;
+  }
+  .mobile-header .brand {
+    font-size: 18px;
+    padding: 0;
+  }
+  .sidebar {
+    width: 230px;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+  .sidebar-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: #0f172a66;
+    z-index: 25;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 0 16px 28px;
+  }
+  .page-heading {
+    min-height: auto;
+    padding: 23px 0;
+  }
+  .page-heading > .flex {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .btn {
+    padding-inline: 12px;
+  }
+  .segmented button {
+    padding-inline: 10px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+    margin-bottom: 18px;
+  }
+  .stat-card {
+    padding: 16px;
+  }
+  .stat-label {
+    font-size: 11px;
+  }
+  .stat-value {
+    font-size: 28px;
+  }
+  .waiting-list {
+    grid-template-columns: 1fr;
+  }
+  .waiting-person > strong {
+    font-size: 13px;
+  }
+  .waiting-person > span {
+    font-size: 11px;
+  }
+  .wait-duration {
+    font-size: 12px;
+  }
+  .table-toolbar {
+    padding: 16px;
+    gap: 12px;
+  }
+  .table-toolbar .search-input {
+    max-width: none;
+  }
+  .table-toolbar > div {
+    width: 100%;
+  }
+  .table-toolbar select {
+    flex: 1;
+    min-width: 130px;
+  }
+  .table-footer > span:last-child {
+    display: none;
+  }
+  .patient-summary {
+    padding: 18px;
+    gap: 18px;
+  }
+  .patient-summary h2 {
+    font-size: 18px;
+  }
+  .primary-dentist {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+    width: 100%;
+    padding-top: 13px;
+    border-top: 1px solid var(--color-line);
+  }
+  .record-tabs {
+    gap: 7px;
+  }
+  .record-tabs > button {
+    flex: 1;
+    white-space: nowrap;
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+  .odontogram {
+    padding: 17px 15px;
+  }
+  .tooth-legend {
+    gap: 10px;
+  }
+  .record-picker .field {
+    width: 100%;
+  }
+  .form-content {
+    padding: 20px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+  .dialog .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dentists-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .settings-panel {
+    padding: 20px;
+  }
+  .evolution-card {
+    padding: 16px;
+  }
+  .prescription-card {
+    padding: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  body {
+    font-size: 11px;
+    background: white;
+  }
+  .sidebar,
+  .mobile-header,
+  .sidebar-overlay,
+  .no-print,
+  .page-heading > div:last-child,
+  .record-tabs,
+  .feedback,
+  .dialog,
+  .skip-link,
+  button {
+    display: none !important;
+  }
+  .main-content {
+    margin: 0;
+    padding: 0;
+  }
+  .page-heading {
+    min-height: auto;
+    padding: 0 0 20px;
+  }
+  .panel {
+    break-inside: avoid;
+  }
+  .odontogram-scroll {
+    overflow: visible;
+  }
+  .dental-chart {
+    min-width: 0;
+  }
+  .tooth-button {
+    display: flex !important;
+  }
+  .prescription-card {
+    break-inside: avoid;
+  }
+  .record-content {
+    gap: 15px;
+  }
+}
