@@ -20,6 +20,7 @@ No PowerShell com execução de scripts desabilitada, use `npm.cmd` no lugar de 
 - `/prontuarios`: seleção de paciente, alertas, odontograma FDI permanente com 32 dentes e seis condições, evolução clínica, anamnese, plano de tratamento e prescrições. A impressão inclui o paciente, odontograma e a seção selecionada.
 - `/dentistas`: usuários com papel de dentista, cadastro de profissionais e atalhos para sua agenda e pacientes.
 - `/configuracoes`: identificação da clínica, contato, expediente e intervalo para novos agendamentos.
+- `/configuracoes/identidade-visual`: logomarcas, favicon, paletas, contraste e escala tipográfica com prévia isolada.
 - `/servicos`: catálogo categorizado, busca, cadastro e edição lateral, preço base, duração de cadeira, percentual de repasse e inativação.
 - `/financeiro`: conferência por turno/data, valores por meio externo, fundo de troco, taxas, repasses, estornos, sangrias e fechamento com borderô.
 - `/financeiro/recebimentos`: pendências do prontuário, baixa manual por Pix/débito/crédito/dinheiro, desconto, troco, NSU, parcelas externas e recibo.
@@ -48,6 +49,7 @@ src/
     services/{model,view,viewmodel}/ # Catálogo e seleção compartilhada de serviços
     management/{model,view,viewmodel}/ # Indicadores, despesas, extratos e exportação DRE
     access/{model,view,viewmodel}/ # Autenticação, equipe, RBAC, auditoria e sessões
+    branding/{model,view,viewmodel}/ # Marca por clínica, imagens, tokens e prévia
   shared/
     components/                # Primitivos de interface
     lib/http/                  # Axios e adaptador da API simulada
@@ -85,7 +87,7 @@ O backend deve aceitar os contratos em `src/features/clinic/model/types.ts`:
 | GET / PUT  | `/records/:patientId`           | Buscar / salvar prontuário                                 |
 | GET / PUT  | `/settings`                     | Buscar / salvar configurações                              |
 
-Respostas retornam a entidade ou lista diretamente. Erros usam `{ "message": "Descrição" }`. As consultas passam `AbortSignal` ao Axios; mutações não têm repetição automática. Autenticação e controle de acesso por papel dependem da futura API e ainda não estão implementados. O modo de demonstração não é destinado ao armazenamento de informações reais de pacientes.
+Respostas retornam a entidade ou lista diretamente. Erros usam `{ "message": "Descrição" }`. As consultas passam `AbortSignal` ao Axios; mutações não têm repetição automática. Autenticação e controle de acesso têm fluxos e validações no modo simulado; a segurança de produção depende do backend. O modo de demonstração não é destinado ao armazenamento de informações reais de pacientes.
 
 ## Fluxo financeiro
 
@@ -213,6 +215,46 @@ Com `VITE_USE_MOCK_API=false`, o frontend usa Axios com `withCredentials` e depe
 
 Contratos de sessão, equipe e permissões: `src/features/access/model/types.ts`. No modo simulado, `/auth/demo-mailbox` expõe as mensagens e `/auth/login` também retorna um ID opaco para os testes automatizados. Esses recursos demonstrativos não integram o contrato de produção.
 
+## Personalização da marca
+
+Implementa `docs/odontoflow_personalizacao_marca.html`. Acesse **Configurações → Identidade visual da clínica** com um administrador.
+
+- Upload independente de logo horizontal e ícone/favicon, por seletor de arquivo ou arraste. Recomendações: 280 × 64px para logo e 64 × 64px ou 128 × 128px para ícone. PNG e SVG são aceitos até 2 MB por imagem, incluindo transparência.
+- O processamento PNG verifica estrutura/CRC e recomprime os bytes filtrados dos pixels com APIs nativas, sem redimensionamento, conversão por canvas ou perda do canal alfa. Mantém o arquivo original se a recompressão não reduzir o tamanho. SVG aceita um subconjunto vetorial estático, removendo comentários e rejeitando scripts, eventos, entidades, recursos externos e elementos ativos. Arquivos incompatíveis mostram erro sem substituir a marca atual. O decodificador do navegador também verifica a imagem no upload demonstrativo.
+- Quatro paletas para a primária: Clínico Teal (`#0D9488`), Navy Confiança (`#1E3A8A`), Sálvia Suave (`#059669`) e Bordeaux & Rose (`#9F1239`). Primária, secundária, terciária e hover podem ser ajustados por seletor ou HEX de seis dígitos; o hover pode ser calculado com 10% de escurecimento.
+- Contraste calculado pela luminância relativa sRGB, sem arredondar antes de comparar os limites. O painel avalia branco sobre primária/hover e o texto efetivamente aplicado ao botão: AA normal ≥ 4,5:1, AA grande ≥ 3:1, AAA normal ≥ 7:1. [Critérios WCAG 2.1](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html). A análise desses pares não é uma certificação de acessibilidade da aplicação inteira. Teal e sálvia com texto branco não atingem AA para texto normal; o sistema mantém o texto branco dos botões conforme o protótipo e informa o contraste para orientar a escolha da cor de fundo.
+- Escalas compacta (13px), padrão (14px) e acessível (16px), aplicadas proporcionalmente a textos, controles e densidade vertical da agenda. O expediente e os horários das consultas permanecem os mesmos. As cores semânticas dos alertas e condições clínicas são preservadas.
+- A prévia é um simulador isolado: alterações locais não modificam a identidade da equipe até **Salvar e aplicar identidade**. É possível descartar o rascunho. Remover um arquivo na prévia retorna à marca padrão; a remoção é aplicada após salvar.
+- A identidade salva é consumida pelo cabeçalho/menu, ícone compacto no celular, login/recuperação, favicon, título/tema da aba, prescrições, impressão do prontuário, recibos, borderôs e DRE em HTML/PDF. Falhas de carregamento das imagens nos componentes de marca retornam ao ícone/texto padrão. O Excel preserva seu formato de planilha e não incorpora as imagens.
+- **Restaurar padrão OdontoFlow** abre uma confirmação e salva a tríade Teal/Slate/Amber, menu escuro como padrão da clínica, fonte de 14px e imagens padrão. Revisões impedem que dois administradores sobrescrevam alterações sem perceber; em conflito, o servidor retorna 409 e solicita atualização.
+- Tokens CSS são aplicados em `:root`, com limpeza na troca de contexto. Incluem `--color-primary`, `--color-primary-hover`, `--color-secondary`, `--color-tertiary`, `--color-surface`, `--font-size-base`, `--clinic-logo-url` e aliases dos tokens existentes. A prévia define os mesmos tokens somente em seu contêiner.
+- `Session.clinicId` identifica o contexto autenticado; as consultas usam `['branding', clinicId]`. A API simulada impede consultar/gravar outro contexto, vincular arquivos de outra clínica ou alterar o vínculo de clínica pelo cadastro de usuário. A marca pública para a tela de login é resolvida pelo contexto da aplicação. Mudanças são atualizadas após salvar, em consultas periódicas e por evento de armazenamento entre abas da demonstração.
+
+### Armazenamento demonstrativo e contrato de produção
+
+A demonstração mantém as marcas separadas por clínica em `Database.branding`, usando a base local existente. Arquivos são representados por URLs de dados; não há bucket ou CDN real. Quando o navegador recusa a persistência de uma alteração de marca, a API simulada retorna 507 e restaura a configuração anterior. Os demais módulos continuam com sua base demonstrativa existente: esta implementação isola a identidade visual, sem converter os dados clínicos/financeiros para uma plataforma multi-tenant de produção.
+
+Em produção, o backend deve resolver a clínica pela sessão e pelo domínio da clínica no acesso público, validar/processar novamente os arquivos, armazená-los em bucket privado por clínica e devolver URLs HTTPS de entrega controlada/CDN. Deve usar URLs versionadas para invalidar cache, verificar revisões e aplicar autorização; o frontend não provisiona armazenamento externo.
+
+| Método | Endpoint                             | Operação                                                                                                     |
+| ------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| GET    | `/public/branding`                   | Identidade pública da clínica resolvida pelo servidor, para login e recuperação                              |
+| GET    | `/clinics/:clinicId/branding`        | Marca da clínica autenticada; retorna `clinicId`, `clinicName`, `config`, `revision` e `updatedAt`           |
+| POST   | `/clinics/:clinicId/branding/assets` | Upload administrativo multipart com `kind` (`logo`/`icon`) e `file`; retorna os metadados e a URL do arquivo |
+| PUT    | `/clinics/:clinicId/branding`        | Salva cores, escala, referências de logo/ícone e revisão esperada; somente administrador                     |
+
+Contratos: `src/features/branding/model/types.ts`. O upload prepara o arquivo para o rascunho; somente o PUT aplica a marca compartilhada. O backend deve ignorar URLs de imagem arbitrárias do cliente e resolver os arquivos pelo ID e pela clínica.
+
+### Tríade de cores e preferência de layout
+
+A identidade institucional inclui primária `#0D9488` (ações e conclusões), secundária `#1E293B` (estrutura, títulos e indicadores) e terciária `#F59E0B` (alertas médicos, espera e pendências de caixa). A distribuição visual segue a referência 60–30–10. As três cores podem ser editadas com seletor/HEX e avaliação dos pares de contraste em **Configurações → Identidade visual**; o hover continua sendo uma propriedade da primária. Restaurações no odontograma acompanham a primária. A espera recebe destaque a partir de 15 minutos desde a chegada, com ícone e descrição além da cor.
+
+O administrador define o layout padrão: **Modo Clínico Claro** ou **Alto Contraste (Tríade)**. O segundo escurece o menu lateral, mantendo o canvas `#F8FAFC` e os cartões claros. O ícone de sol/lua junto ao perfil no menu lateral alterna o tema pessoal e salva a preferência sem recarregar. Novos perfis seguem o padrão da clínica até escolherem seu próprio tema; escolhas pessoais prevalecem sem afetar colegas. A faixa superior de perfil e controles foi removida. Botões preenchidos com a primária preservam texto branco.
+
+`features/appearance` separa contratos/regras e Axios (Model), consultas/mutação otimista com rollback (ViewModel) e botão de tema (View). TanStack Query é o proprietário das preferências; LocalStorage mantém somente um cache de carregamento por clínica/usuário. O menu usa o Zustand existente para abertura no celular e para recolher/expandir a barra no desktop. Recolhido, mostra ícones com rótulos acessíveis e dicas de identificação, mantendo navegação, tema e saída da conta disponíveis. A largura do conteúdo acompanha a barra; a escolha de recolhimento permanece durante a navegação. Não há duplicação de telas nem recarga ao alternar layouts. Identidades antigas recebem os novos campos preservando suas cores, imagens, fonte e revisão.
+
+Na API simulada, `Database.appearance` persiste o perfil junto à base demonstrativa. `GET /profiles/me/preferences` retorna `{ clinicId, userId, preferredLayout, highContrastAlerts }`; `PUT` salva o mesmo contrato. `preferredLayout` aceita `default`, `light_sidebar` ou `dark_sidebar`. Ambos exigem sessão; gravações não podem mudar o perfil ou clínica do ator. O backend de produção deve implementar esses endpoints e persistir os campos no perfil autenticado. `BrandingInput` agora inclui `secondary`, `tertiary` e `defaultLayout`, além dos campos anteriores. Falhas de armazenamento retornam erro e conservam a preferência anterior.
+
 ## Verificação
 
 ```sh
@@ -224,6 +266,6 @@ npm run build
 
 Os testes usam o executor nativo do Node e cobrem conflitos de agenda, validação de pacientes, consulta de usuários com Axios/TanStack Query e cache, cadastros, atualização da fila, isolamento de prontuários, erros e cancelamento. A suíte financeira cobre arredondamento, parcelas, troco, confirmação Pix, comprovantes, concorrência de baixa, proteção de procedimentos pagos, estorno, sangria, divergências e bloqueios após fechamento.
 
-Com o servidor de desenvolvimento em execução e o Chrome instalado, `npm run test:browser` verifica os principais fluxos das onze páginas administrativas em desktop e celular. Cobre cadastro/edição/inativação e busca de serviços, duração automática na agenda, marcação sem serviço, avaliação gratuita, comanda com dois dentistas e desconto, Pix + cartão, recibo detalhado, baixa no prontuário, estorno, troco, sangria, fechamento, borderô e novo turno. Também verifica login e redirecionamento por perfil, prontuário somente para leitura, bloqueio de URLs, convites e recuperação, permissões, filtros e períodos da gestão financeira, despesas, meta, extrato, download Excel e geração do PDF, além da apresentação para impressão dos recibos. O teste usa um perfil temporário isolado e imprime os caminhos das capturas. O caminho padrão do Chrome é o de uma instalação Windows; use `CHROME_PATH` para outro executável e `APP_URL` para outro endereço. Não exige instalar Playwright ou outro navegador. `npm run format:check` verifica a formatação.
+Com o servidor de desenvolvimento em execução e o Chrome instalado, `npm run test:browser` verifica os principais fluxos das doze páginas administrativas em desktop e celular. Cobre cadastro/edição/inativação e busca de serviços, duração automática na agenda, marcação sem serviço, avaliação gratuita, comanda com dois dentistas e desconto, Pix + cartão, recibo detalhado, baixa no prontuário, estorno, troco, sangria, fechamento, borderô e novo turno. Também verifica personalização de marca, upload, paletas, fontes, prévia isolada e restauração, além de login e redirecionamento por perfil, prontuário somente para leitura, bloqueio de URLs, convites e recuperação, permissões, filtros e períodos da gestão financeira, despesas, meta, extrato, download Excel e geração do PDF, além da apresentação para impressão dos recibos. O teste usa um perfil temporário isolado e imprime os caminhos das capturas. O caminho padrão do Chrome é o de uma instalação Windows; use `CHROME_PATH` para outro executável e `APP_URL` para outro endereço. Não exige instalar Playwright ou outro navegador. `npm run format:check` verifica a formatação.
 
 Para servir o build localmente, execute `npm run preview`. Em hospedagem estática, configure o fallback das rotas para `index.html`.

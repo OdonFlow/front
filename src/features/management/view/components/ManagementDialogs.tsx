@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { ClinicBrand } from '../../../branding/view/ClinicBrand';
 import { Dialog, Field, Feedback } from '../../../../shared/components/ui';
 import { money } from '../../../finance/model/finance.rules';
 import { localDate } from '../../../clinic/model/fixtures';
@@ -257,7 +258,7 @@ export function ManagementDialogs({ vm }: { vm: ManagementViewModel }) {
     <article className="finance-document finance-report management-report">
       <header className="finance-document-heading">
         <div>
-          <span className="brand">{vm.clinicName}</span>
+          <ClinicBrand name={vm.clinicName} />
           <h2>{doctor ? 'Extrato de produção e repasses' : 'DRE gerencial'}</h2>
         </div>
         <span className="badge badge-teal">Regime de caixa</span>

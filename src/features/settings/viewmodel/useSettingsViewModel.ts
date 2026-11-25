@@ -8,7 +8,10 @@ export function useSettingsViewModel() {
     mutationFn: clinicApi.saveSettings,
     onSuccess: async (settings) => {
       client.setQueryData(settingsOptions.queryKey, settings);
-      await client.invalidateQueries({ queryKey: ['settings'] });
+      await Promise.all([
+        client.invalidateQueries({ queryKey: ['settings'] }),
+        client.invalidateQueries({ queryKey: ['branding'] }),
+      ]);
     },
   });
   return {

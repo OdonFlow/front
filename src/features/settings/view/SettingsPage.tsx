@@ -1,14 +1,16 @@
 import { useSettingsViewModel } from '../viewmodel/useSettingsViewModel';
 import { Feedback, Field, PageHeading, QueryState } from '../../../shared/components/ui';
 import { Icon } from '../../../shared/components/Icon';
+import { Link } from '@tanstack/react-router';
 export function SettingsPage() {
   const vm = useSettingsViewModel();
   return (
     <>
-      <PageHeading
-        title="Configurações"
-        subtitle="Deixe o OdontoFlow com o jeito da sua clínica."
-      />
+      <PageHeading title="Configurações" subtitle="Deixe o OdontoFlow com o jeito da sua clínica.">
+        <Link className="btn btn-secondary" to="/configuracoes/identidade-visual">
+          Identidade visual da clínica
+        </Link>
+      </PageHeading>
       <QueryState pending={vm.pending} error={vm.error} retry={vm.retry}>
         {vm.settings && (
           <form

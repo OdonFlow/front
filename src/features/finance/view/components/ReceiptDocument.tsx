@@ -1,7 +1,7 @@
 import type { ClinicSettings } from '../../../clinic/model/types';
 import type { Receipt } from '../../model/types';
 import { methodLabels, money, receiptItems, receiptPayments } from '../../model/finance.rules';
-import { Icon } from '../../../../shared/components/Icon';
+import { ClinicBrand } from '../../../branding/view/ClinicBrand';
 
 export function ReceiptDocument({
   receipt,
@@ -15,10 +15,7 @@ export function ReceiptDocument({
   return (
     <article className="finance-document">
       <header className="finance-document-heading">
-        <span className="brand">
-          <Icon name="tooth" size={25} />
-          {clinic?.name ?? 'OdontoFlow'}
-        </span>
+        <ClinicBrand name={clinic?.name} />
         <div>
           <h2>{receipt.courtesy ? 'Comprovante de cortesia' : 'Recibo de pagamento'}</h2>
           <p>{receipt.number}</p>

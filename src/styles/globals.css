@@ -9,6 +9,13 @@
   --color-line: #e2e8f0;
   --color-ink: #0f172a;
   --color-muted: #64748b;
+  --text-xs: calc(var(--font-size-base, 14px) * 12 / 14);
+  --text-sm: var(--font-size-base, 14px);
+  --text-base: calc(var(--font-size-base, 14px) * 16 / 14);
+  --text-lg: calc(var(--font-size-base, 14px) * 18 / 14);
+  --text-xl: calc(var(--font-size-base, 14px) * 20 / 14);
+  --text-2xl: calc(var(--font-size-base, 14px) * 24 / 14);
+  --text-3xl: calc(var(--font-size-base, 14px) * 30 / 14);
 }
 
 @layer base {
@@ -20,8 +27,8 @@
     background: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
+    line-height: var(--font-line-height, 1.6);
     -webkit-font-smoothing: antialiased;
   }
   button,
@@ -63,19 +70,19 @@
     margin: 0;
   }
   h1 {
-    font-size: 25px;
+    font-size: calc(var(--font-size-base, 14px) * 25 / 14);
     font-weight: 800;
     line-height: 1.3;
     letter-spacing: -0.8px;
   }
   h2 {
-    font-size: 16px;
+    font-size: calc(var(--font-size-base, 14px) * 16 / 14);
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.3px;
   }
   h3 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
     font-weight: 700;
   }
   :focus-visible {
@@ -103,8 +110,8 @@
   input:focus,
   textarea:focus,
   select:focus {
-    border-color: var(--color-brand);
-    box-shadow: 0 0 0 3px #0d948815;
+    border-color: var(--color-brand-text);
+    box-shadow: 0 0 0 3px var(--color-brand-shadow);
   }
   select {
     padding-right: 34px;
@@ -119,7 +126,7 @@
   input[type='checkbox'] {
     width: 17px;
     height: 17px;
-    accent-color: var(--color-brand);
+    accent-color: var(--color-brand-text);
   }
 }
 
@@ -142,8 +149,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--color-brand);
-    font-size: 19px;
+    color: var(--color-brand-text);
+    font-size: calc(var(--font-size-base, 14px) * 19 / 14);
     font-weight: 800;
     letter-spacing: -0.6px;
     padding: 0 8px;
@@ -161,7 +168,7 @@
     flex-shrink: 0;
   }
   .sidebar-caption {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     letter-spacing: 1.6px;
     margin: 45px 14px 14px;
@@ -178,17 +185,17 @@
     padding: 12px 14px;
     min-height: 45px;
     color: #64748b;
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
     font-weight: 500;
     border-radius: 10px;
   }
   .nav-link:hover {
     background: #f8fafc;
-    color: var(--color-brand-dark);
+    color: var(--color-brand-text);
   }
   .nav-link.active {
     background: var(--color-brand-light);
-    color: var(--color-brand-dark);
+    color: var(--color-brand-text);
     font-weight: 700;
   }
   .sidebar-bottom {
@@ -199,7 +206,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     padding: 10px 5px 17px;
   }
@@ -219,11 +226,11 @@
   }
   .profile strong {
     display: block;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .profile div > span {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: var(--color-muted);
   }
   .avatar {
@@ -234,16 +241,16 @@
     height: 36px;
     flex-shrink: 0;
     border-radius: 50%;
-    background: #f0fdfa;
-    color: #0f766e;
-    font-size: 12px;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 700;
   }
   .avatar-large {
     width: 62px;
     height: 62px;
-    font-size: 20px;
-    background: #ccfbf1;
+    font-size: calc(var(--font-size-base, 14px) * 20 / 14);
+    background: var(--color-brand-soft);
   }
   .main-content {
     margin-left: 220px;
@@ -260,7 +267,7 @@
   }
   .page-heading > div > p {
     color: var(--color-muted);
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     margin-top: 5px;
   }
   .panel {
@@ -277,7 +284,7 @@
     border-radius: 9px;
     padding: 10px 15px;
     min-height: 41px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 600;
     white-space: nowrap;
     line-height: 1.5;
@@ -285,7 +292,7 @@
   .btn-primary {
     background: var(--color-brand);
     color: white;
-    box-shadow: 0 2px 3px #0f766e0a;
+    box-shadow: 0 2px 3px var(--color-brand-shadow);
   }
   .btn-primary:hover:not(:disabled) {
     background: var(--color-brand-dark);
@@ -321,8 +328,8 @@
     background: transparent;
   }
   .icon-button:hover {
-    background: #f0fdfa;
-    color: #0f766e;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
   }
   .segmented {
     display: flex;
@@ -338,16 +345,16 @@
     background: transparent;
     color: #64748b;
     padding: 7px 14px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 500;
   }
   .segmented button.selected {
-    color: #0f766e;
+    color: var(--color-brand-text);
     background: white;
     box-shadow: 0 1px 3px #0f172a15;
   }
   .secondary-text {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     color: var(--color-muted);
   }
   .stat-grid {
@@ -363,24 +370,24 @@
     padding: 17px 18px 16px;
   }
   .stat-value {
-    font-size: 28px;
+    font-size: calc(var(--font-size-base, 14px) * 28 / 14);
     line-height: 1.2;
     font-weight: 800;
     letter-spacing: -0.9px;
   }
   .stat-label {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     margin-top: 10px;
   }
   .stat-primary {
     background: var(--color-brand);
-    border-color: var(--color-brand);
+    border-color: var(--color-brand-text);
     color: white;
   }
   .stat-primary .stat-label {
-    color: #f0fdfa;
+    color: var(--color-brand-light);
   }
   .stat-icon {
     display: inline-flex;
@@ -399,8 +406,8 @@
     color: #b45309;
   }
   .stat-icon-2 {
-    background: #f0fdfa;
-    color: #0d9488;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
   }
   .stat-icon-3 {
     background: #f1f5f9;
@@ -428,12 +435,12 @@
     width: 143px;
     padding: 5px 8px;
     border-color: transparent;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .calendar-toolbar select {
     max-width: 190px;
     min-height: 32px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     padding-block: 5px;
   }
   .calendar-toolbar .btn {
@@ -454,7 +461,7 @@
     justify-content: center;
     width: 55px;
     flex-shrink: 0;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .dentist-column-title {
@@ -468,20 +475,20 @@
   }
   .dentist-column-title strong {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     font-weight: 700;
   }
   .dentist-column-title div > span {
     display: block;
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     margin-top: 3px;
   }
   .dentist-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #0d9488;
+    background: var(--color-brand);
     flex-shrink: 0;
   }
   .dentist-column-title:nth-child(3) .dentist-dot {
@@ -504,7 +511,7 @@
     position: absolute;
     right: 11px;
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     padding-top: 7px;
   }
   .day-column {
@@ -522,7 +529,7 @@
     background: transparent;
   }
   .calendar-slot:hover {
-    background: #f0fdfa;
+    background: var(--color-brand-light);
   }
   .appointment {
     position: absolute;
@@ -544,16 +551,16 @@
     filter: brightness(0.98);
   }
   .appointment-confirmed {
-    background: #f0fdfa;
-    border-left-color: #0d9488;
+    background: var(--color-brand-light);
+    border-left-color: var(--color-brand-text);
   }
   .appointment-waiting {
     background: #fffbeb;
     border-left-color: #d97706;
   }
   .appointment-in-progress {
-    background: #ccfbf1;
-    border-left-color: #0d9488;
+    background: var(--color-brand-soft);
+    border-left-color: var(--color-brand-text);
   }
   .appointment-completed {
     background: #f8fafc;
@@ -573,14 +580,14 @@
   }
   .appointment-top strong {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     line-height: 1.5;
     color: #0f172a;
   }
   .appointment-top > span {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     white-space: nowrap;
-    color: #0f766e;
+    color: var(--color-brand-text);
     padding-top: 1px;
   }
   .appointment-waiting .appointment-top > span {
@@ -591,7 +598,7 @@
   }
   .appointment-description {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     line-height: 1.5;
     margin-top: 4px;
@@ -601,7 +608,7 @@
     left: 49px;
     right: 0;
     height: 1px;
-    background: #14b8a6;
+    background: var(--color-brand);
     z-index: 3;
     pointer-events: none;
   }
@@ -611,7 +618,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #0d9488;
+    background: var(--color-brand);
   }
   .calendar-footer {
     border-top: 1px solid var(--color-line);
@@ -624,7 +631,7 @@
     display: inline-flex;
     gap: 6px;
     align-items: center;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .legend-dot {
@@ -637,16 +644,16 @@
     padding: 19px 15px 14px;
   }
   .waiting-panel h2 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
   }
   .waiting-panel > .secondary-text {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .count-badge {
     background: #fffbeb;
     color: #b45309;
     border-radius: 50%;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     min-width: 23px;
     height: 23px;
     text-align: center;
@@ -669,19 +676,19 @@
     text-align: left;
   }
   .waiting-item.selected {
-    border-color: #99f6e4;
-    background: #f0fdfa;
+    border-color: var(--color-brand-border);
+    background: var(--color-brand-light);
   }
   .waiting-item .avatar {
     width: 33px;
     height: 33px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     background: #f8fafc;
     color: #64748b;
   }
   .waiting-item.selected .avatar {
     background: white;
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .waiting-person {
     flex: 1;
@@ -689,17 +696,17 @@
   }
   .waiting-person > strong {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     font-weight: 700;
   }
   .waiting-person > span {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     margin-top: 3px;
   }
   .wait-duration {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     white-space: nowrap;
     color: #64748b;
   }
@@ -712,7 +719,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .table-toolbar {
@@ -723,7 +730,7 @@
     align-items: center;
   }
   .table-toolbar select {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     width: auto;
   }
   .search-input {
@@ -745,12 +752,12 @@
     background: transparent;
     padding: 10px 0 !important;
     min-width: 0;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     outline: none;
   }
   .search-input:focus-within {
-    border-color: #0d9488;
-    box-shadow: 0 0 0 3px #0d948815;
+    border-color: var(--color-brand-text);
+    box-shadow: 0 0 0 3px var(--color-brand-shadow);
   }
   .table-scroll {
     overflow-x: auto;
@@ -763,7 +770,7 @@
   }
   th {
     padding: 12px 20px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     font-weight: 500;
     background: #f8fafc;
@@ -771,7 +778,7 @@
   }
   td {
     padding: 16px 20px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #475569;
     border-bottom: 1px solid #f1f5f9;
   }
@@ -780,7 +787,7 @@
     font-weight: 600;
   }
   tbody tr:hover {
-    background: #f0fdfa80;
+    background: var(--color-brand-light);
   }
   .patient-name {
     display: flex;
@@ -792,24 +799,24 @@
   }
   .patient-name > span > strong {
     display: block;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .patient-name > span > span {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     margin-top: 3px;
     color: #64748b;
   }
   .patient-name:hover strong,
   .contact-link:hover {
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     line-height: 1.6;
     border-radius: 6px;
     font-weight: 600;
@@ -817,8 +824,8 @@
     white-space: nowrap;
   }
   .badge-teal {
-    color: #115e59;
-    background: #ccfbf1;
+    color: var(--color-brand-ink);
+    background: var(--color-brand-soft);
   }
   .badge-slate {
     color: #475569;
@@ -838,7 +845,7 @@
     justify-content: space-between;
     gap: 10px;
     padding: 16px 20px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .dialog {
@@ -870,10 +877,10 @@
     background: white;
   }
   .dialog-heading h2 {
-    font-size: 18px;
+    font-size: calc(var(--font-size-base, 14px) * 18 / 14);
   }
   .dialog-heading p {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     color: #64748b;
     margin-top: 4px;
   }
@@ -897,14 +904,14 @@
   }
   .field > span {
     display: block;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     color: #475569;
     font-weight: 500;
   }
   .field input,
   .field select,
   .field textarea {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .form-grid {
     display: grid;
@@ -921,8 +928,8 @@
     margin-top: 5px;
   }
   .form-section-title {
-    font-size: 11px;
-    color: #0f766e;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
+    color: var(--color-brand-text);
     padding: 8px 0 0;
   }
   .drawer-patient {
@@ -932,10 +939,10 @@
     margin-bottom: 5px;
   }
   .drawer-patient h3 {
-    font-size: 16px;
+    font-size: calc(var(--font-size-base, 14px) * 16 / 14);
   }
   .drawer-patient p {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     margin-top: 4px;
   }
@@ -943,7 +950,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     color: #475569;
   }
   .feedback {
@@ -952,7 +959,7 @@
     gap: 8px;
     padding: 12px 16px;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     margin: 8px 0;
   }
   .feedback-error {
@@ -961,9 +968,9 @@
     border: 1px solid #fecaca;
   }
   .feedback-success {
-    color: #115e59;
-    background: #f0fdfa;
-    border: 1px solid #99f6e4;
+    color: var(--color-brand-ink);
+    background: var(--color-brand-light);
+    border: 1px solid var(--color-brand-border);
   }
   .empty-state {
     min-height: 260px;
@@ -981,7 +988,7 @@
     color: #334155;
   }
   .empty-state p {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .empty-state.compact {
     min-height: 130px;
@@ -991,7 +998,7 @@
     width: 24px;
     height: 24px;
     border: 2px solid #e2e8f0;
-    border-top-color: #0d9488;
+    border-top-color: var(--color-brand-text);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
@@ -1015,7 +1022,7 @@
     align-items: center;
     gap: 6px;
     padding-bottom: 12px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .record-content {
     display: grid;
@@ -1029,12 +1036,12 @@
     flex-wrap: wrap;
   }
   .patient-summary h2 {
-    font-size: 20px;
+    font-size: calc(var(--font-size-base, 14px) * 20 / 14);
     margin-top: 2px;
     margin-bottom: 3px;
   }
   .patient-summary .secondary-text {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .patient-alerts {
     margin-left: auto;
@@ -1049,7 +1056,7 @@
     gap: 5px;
   }
   .primary-dentist strong {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     font-weight: 600;
   }
   .section-heading {
@@ -1061,7 +1068,7 @@
   }
   .section-heading .secondary-text {
     margin-top: 3px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .odontogram {
     padding: 21px 24px 15px;
@@ -1076,7 +1083,7 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .tooth-dot {
@@ -1089,7 +1096,7 @@
     flex-shrink: 0;
   }
   .tooth-healthy {
-    --tooth-color: #0d9488;
+    --tooth-color: var(--color-brand-text);
     --tooth-bg: #ffffff;
   }
   .tooth-restoration {
@@ -1149,7 +1156,7 @@
   }
   .tooth-number {
     display: block;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     margin-bottom: 3px;
   }
@@ -1179,7 +1186,7 @@
     display: flex;
     justify-content: space-between;
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     padding: 0 8px;
     margin-top: 6px;
   }
@@ -1194,17 +1201,17 @@
     border: 1px solid var(--color-line);
     border-radius: 8px;
     padding: 10px 17px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .record-tabs > button.active {
-    background: #0d9488;
+    background: var(--color-brand);
     color: white;
-    border-color: #0d9488;
+    border-color: var(--color-brand-text);
     font-weight: 600;
   }
   .record-tabs > button:hover:not(.active) {
-    background: #f0fdfa;
-    color: #0f766e;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
   }
   .evolution-list {
     display: grid;
@@ -1221,14 +1228,14 @@
     display: flex;
     align-items: center;
     gap: 9px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     font-weight: 600;
   }
   .timeline-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #0d9488;
+    background: var(--color-brand);
   }
   .evolution-dentist {
     display: flex;
@@ -1238,27 +1245,27 @@
   .evolution-dentist .avatar {
     width: 30px;
     height: 30px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .evolution-dentist strong {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     display: block;
     font-weight: 600;
   }
   .evolution-dentist span:not(.avatar) {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     display: block;
     margin-top: 3px;
   }
   .evolution-card > p {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     line-height: 1.8;
     color: #64748b;
   }
   .muted-count {
     margin-left: 7px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 500;
     color: #64748b;
   }
@@ -1284,12 +1291,12 @@
   }
   .tooth-option.selected,
   .tooth-option:hover {
-    border-color: #0d9488;
-    background: #f0fdfa;
+    border-color: var(--color-brand-text);
+    background: var(--color-brand-light);
   }
   .tooth-option svg {
     margin-left: auto;
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .tooth-chip {
     display: inline-flex;
@@ -1298,15 +1305,15 @@
     width: 30px;
     height: 30px;
     border-radius: 7px;
-    background: #f0fdfa;
-    color: #0f766e;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
     font-weight: 700;
   }
   .text-button {
     background: transparent;
-    color: #0f766e;
+    color: var(--color-brand-text);
     border: 0;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 600;
     padding: 5px;
   }
@@ -1324,12 +1331,12 @@
   }
   .treatment-total > span {
     display: grid;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     gap: 4px;
   }
   .treatment-total strong {
-    font-size: 17px;
+    font-size: calc(var(--font-size-base, 14px) * 17 / 14);
     color: #0f172a;
   }
   .prescription-list {
@@ -1342,12 +1349,12 @@
   .prescription-card > p {
     padding: 20px 0;
     color: #475569;
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .prescription-signature {
     padding-top: 15px;
     border-top: 1px solid var(--color-line);
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .feature-icon {
@@ -1357,8 +1364,8 @@
     width: 44px;
     height: 44px;
     flex-shrink: 0;
-    background: #f0fdfa;
-    color: #0f766e;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
     border-radius: 10px;
   }
   .dentists-grid {
@@ -1370,12 +1377,12 @@
     padding: 23px;
   }
   .dentist-card h2 {
-    font-size: 17px;
+    font-size: calc(var(--font-size-base, 14px) * 17 / 14);
     margin-top: 20px;
   }
   .dentist-specialty {
-    color: #0f766e;
-    font-size: 12px;
+    color: var(--color-brand-text);
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     margin-top: 3px;
     font-weight: 500;
   }
@@ -1384,12 +1391,12 @@
     align-items: center;
     gap: 8px;
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     margin: 23px 0 16px;
     overflow-wrap: anywhere;
   }
   .dentist-contact:hover {
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .dentist-patients {
     border-top: 1px solid var(--color-line);
@@ -1397,14 +1404,14 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .dentist-patients strong {
     color: #0f172a;
   }
   .dentist-patients svg {
-    color: #0f766e;
+    color: var(--color-brand-text);
     margin-right: 3px;
   }
   .settings-form {
@@ -1425,7 +1432,7 @@
   }
   .settings-section-intro p {
     color: #64748b;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     margin-top: 6px;
     max-width: 220px;
   }
@@ -1446,7 +1453,7 @@
     position: fixed;
     top: -70px;
     left: 10px;
-    background: #0f766e;
+    background: var(--color-brand-text);
     color: white;
     padding: 12px;
     border-radius: 8px;
@@ -1462,13 +1469,13 @@
     padding-inline: 38px;
   }
   .appointment-top strong {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .appointment-top > span {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .appointment-description {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
 }
 @media (max-width: 1180px) {
@@ -1509,7 +1516,7 @@
     padding-inline: 20px;
   }
   .brand {
-    font-size: 17px;
+    font-size: calc(var(--font-size-base, 14px) * 17 / 14);
   }
   .agenda-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1522,20 +1529,20 @@
     padding: 15px 0;
   }
   .waiting-note {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .stat-card {
     padding: 14px;
   }
   .stat-label {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .stat-icon {
     width: 27px;
     height: 27px;
   }
   .stat-value {
-    font-size: 25px;
+    font-size: calc(var(--font-size-base, 14px) * 25 / 14);
   }
   .primary-dentist {
     margin-left: auto;
@@ -1562,7 +1569,7 @@
 }
 @media (max-width: 700px) {
   h1 {
-    font-size: 22px;
+    font-size: calc(var(--font-size-base, 14px) * 22 / 14);
   }
   .mobile-header {
     display: flex;
@@ -1573,7 +1580,7 @@
     background: white;
   }
   .mobile-header .brand {
-    font-size: 18px;
+    font-size: calc(var(--font-size-base, 14px) * 18 / 14);
     padding: 0;
   }
   .sidebar {
@@ -1622,22 +1629,22 @@
     padding: 16px;
   }
   .stat-label {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .stat-value {
-    font-size: 28px;
+    font-size: calc(var(--font-size-base, 14px) * 28 / 14);
   }
   .waiting-list {
     grid-template-columns: 1fr;
   }
   .waiting-person > strong {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .waiting-person > span {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .wait-duration {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .table-toolbar {
     padding: 16px;
@@ -1661,7 +1668,7 @@
     gap: 18px;
   }
   .patient-summary h2 {
-    font-size: 18px;
+    font-size: calc(var(--font-size-base, 14px) * 18 / 14);
   }
   .primary-dentist {
     margin-left: 0;
@@ -1678,7 +1685,7 @@
     flex: 1;
     white-space: nowrap;
     padding: 9px 11px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .odontogram {
     padding: 17px 15px;
@@ -1728,7 +1735,7 @@
     margin: 15mm;
   }
   body {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     background: white;
   }
   .sidebar,

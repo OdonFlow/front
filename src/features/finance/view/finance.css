@@ -6,7 +6,7 @@
     gap: 14px;
     margin: 0 0 22px;
     color: #64748b;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .finance-context strong {
     color: #0f172a;
@@ -25,18 +25,18 @@
   .payment-picker > select {
     flex: 1;
     width: 0;
-    font-size: 12px;
-    background-color: #f0fdfa;
-    border-color: #99f6e4;
-    color: #0f766e;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
+    background-color: var(--color-brand-light);
+    border-color: var(--color-brand-border);
+    color: var(--color-brand-text);
     font-weight: 600;
   }
   .selected-receivable {
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #99f6e4;
-    background: #f0fdfa;
+    border: 1px solid var(--color-brand-border);
+    background: var(--color-brand-light);
     border-radius: 10px;
     padding: 15px 18px;
     margin-bottom: 20px;
@@ -45,10 +45,10 @@
     flex: 1;
   }
   .selected-receivable strong {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .selected-receivable p {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     color: #64748b;
     margin-top: 3px;
   }
@@ -64,7 +64,7 @@
     gap: 22px;
   }
   .payment-fields h2 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
   }
   .payment-methods {
     display: grid;
@@ -91,24 +91,24 @@
     margin-bottom: 4px;
   }
   .payment-method strong {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     font-weight: 600;
   }
   .payment-method > span {
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .payment-method.selected {
-    border-color: #0d9488;
-    box-shadow: inset 0 0 0 1px #0d9488;
-    background: #f0fdfa;
-    color: #0f766e;
+    border-color: var(--color-brand-text);
+    box-shadow: inset 0 0 0 1px var(--color-brand);
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
   }
   .payment-method.selected > svg {
-    color: #0d9488;
+    color: var(--color-brand-text);
   }
   .payment-method:has(input:focus-visible) {
-    outline: 3px solid #0d9488;
+    outline: 3px solid var(--color-brand);
     outline-offset: 3px;
   }
   .payment-summary {
@@ -121,11 +121,11 @@
     gap: 17px;
   }
   .payment-summary h2 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
   }
   .payment-summary .checkbox-label {
     align-items: start;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .payment-summary input[type='checkbox'] {
     flex-shrink: 0;
@@ -133,7 +133,7 @@
   }
   .payment-total-card {
     border-radius: 10px;
-    background: #0d9488;
+    background: var(--color-brand);
     color: white;
     padding: 18px;
   }
@@ -141,7 +141,7 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     padding-block: 3px;
   }
   .payment-total-card .payment-settled {
@@ -151,7 +151,7 @@
     padding-top: 13px;
   }
   .payment-settled > strong {
-    font-size: 28px;
+    font-size: calc(var(--font-size-base, 14px) * 28 / 14);
     font-weight: 800;
     letter-spacing: -1px;
   }
@@ -165,7 +165,7 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .payment-accounting strong {
@@ -176,13 +176,13 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .payment-check > svg {
-    color: #0d9488;
+    color: var(--color-brand-text);
   }
   .payment-help {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     text-align: center;
   }
   .commission-preview {
@@ -198,10 +198,10 @@
     flex: 1;
   }
   .commission-preview strong {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .commission-preview p {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
     margin-top: 3px;
   }
@@ -210,9 +210,9 @@
     align-items: center;
     min-height: 42px;
     padding: 9px 12px;
-    border: 1px solid #99f6e4;
-    background: #f0fdfa;
-    color: #0f766e;
+    border: 1px solid var(--color-brand-border);
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
     border-radius: 9px;
     font-weight: 700;
   }
@@ -220,12 +220,12 @@
     background: #fef2f2;
     color: #991b1b;
     border-color: #fecaca;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .pix-confirmation {
     padding: 13px;
-    background: #f0fdfa;
-    border: 1px solid #99f6e4;
+    background: var(--color-brand-light);
+    border: 1px solid var(--color-brand-border);
     border-radius: 9px;
     align-items: start;
   }
@@ -256,7 +256,7 @@
     flex-wrap: wrap;
   }
   .finance-toolbar h2 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
   }
   .finance-date-controls {
     display: flex;
@@ -264,11 +264,11 @@
   }
   .finance-date-controls > input {
     width: 155px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .finance-date-controls > select {
     width: 160px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .finance-stats .stat-card {
     display: grid;
@@ -277,18 +277,18 @@
   }
   .finance-stats .stat-label {
     margin-top: 0;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .finance-stats .stat-value {
-    font-size: 25px;
+    font-size: calc(var(--font-size-base, 14px) * 25 / 14);
     white-space: nowrap;
   }
   .finance-stats .stat-card > span:last-child {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .finance-stats .stat-primary > span:last-child {
-    color: #f0fdfa;
+    color: var(--color-brand-light);
   }
   .finance-dashboard-layout {
     display: grid;
@@ -304,13 +304,13 @@
   .finance-ledger th,
   .finance-ledger td {
     padding: 13px 15px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .ledger-detail {
     display: block;
     margin-top: 4px;
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .ledger-actions {
     display: grid;
@@ -319,7 +319,7 @@
   }
   .ledger-actions .text-button {
     padding: 0;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .ledger-actions .subtle {
     color: #64748b;
@@ -335,7 +335,7 @@
     padding: 20px;
   }
   .shift-summary h2 {
-    font-size: 14px;
+    font-size: calc(var(--font-size-base, 14px) * 14 / 14);
   }
   .shift-summary > .section-heading {
     gap: 4px;
@@ -349,7 +349,7 @@
     display: flex;
     gap: 10px;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .shift-summary dt {
     color: #64748b;
@@ -368,7 +368,7 @@
     font-weight: 700;
   }
   .shift-total > dd {
-    color: #0d9488;
+    color: var(--color-brand-text);
     font-weight: 700;
   }
   .cash-available {
@@ -378,16 +378,16 @@
     gap: 12px;
     padding: 13px 12px;
     border-radius: 9px;
-    background: #f0fdfa;
-    color: #0f766e;
-    font-size: 12px;
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .cash-available > span {
     color: #64748b;
   }
   .shift-summary > .btn {
     margin-top: 12px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .finance-withdrawals {
     padding: 20px;
@@ -399,19 +399,19 @@
     padding-top: 17px;
     margin-top: 17px;
     border-top: 1px solid #e2e8f0;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .withdrawal-row > div {
     flex: 1;
   }
   .withdrawal-row p {
     color: #475569;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     margin-top: 3px;
   }
   .withdrawal-row div > span {
     color: #64748b;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .finance-form-fieldset {
     display: grid;
@@ -427,13 +427,13 @@
   }
   .closing-counts .secondary-text {
     margin-top: 5px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .difference-warning {
     color: #b45309;
   }
   .difference-ok {
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .finance-print-document {
     display: none;
@@ -460,16 +460,16 @@
   }
   .finance-document-heading p {
     color: #64748b;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .finance-document > p {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .document-total {
     padding: 20px;
-    border: 1px solid #99f6e4;
-    background: #f0fdfa;
-    color: #0f766e;
+    border: 1px solid var(--color-brand-border);
+    background: var(--color-brand-light);
+    color: var(--color-brand-text);
     margin-block: 23px;
     border-radius: 9px;
     display: flex;
@@ -478,13 +478,13 @@
     gap: 12px;
   }
   .document-total strong {
-    font-size: 27px;
+    font-size: calc(var(--font-size-base, 14px) * 27 / 14);
   }
   .document-details {
     margin: 23px 0;
     display: grid;
     gap: 12px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .document-details > div {
     display: grid;
@@ -510,10 +510,10 @@
     padding-top: 9px;
     max-width: 320px;
     margin: auto;
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .document-signature > p {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
     color: #64748b;
   }
   .report-summary {
@@ -529,11 +529,11 @@
     background: #f8fafc;
     border-radius: 9px;
     color: #64748b;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   }
   .report-summary strong {
     color: #0f172a;
-    font-size: 17px;
+    font-size: calc(var(--font-size-base, 14px) * 17 / 14);
   }
   .finance-report table {
     margin-top: 15px;
@@ -542,7 +542,7 @@
   .finance-report th,
   .finance-report td {
     padding: 10px;
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .report-withdrawal {
     border-bottom: 1px solid #e2e8f0;
@@ -564,7 +564,7 @@
     margin-block: 16px;
   }
   .finance-stats .stat-value {
-    font-size: 21px;
+    font-size: calc(var(--font-size-base, 14px) * 21 / 14);
   }
   .finance-dashboard-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -615,7 +615,7 @@
     gap: 8px;
   }
   .selected-receivable > strong {
-    font-size: 12px;
+    font-size: calc(var(--font-size-base, 14px) * 12 / 14);
     white-space: nowrap;
   }
   .selected-receivable .avatar {
@@ -629,7 +629,7 @@
     text-align: right;
   }
   .finance-toolbar h2 {
-    font-size: 13px;
+    font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   }
   .finance-date-controls {
     flex-wrap: wrap;
@@ -640,13 +640,13 @@
     gap: 8px;
   }
   .finance-stats .stat-label {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .finance-stats .stat-value {
-    font-size: 20px;
+    font-size: calc(var(--font-size-base, 14px) * 20 / 14);
   }
   .finance-stats .stat-card > span:last-child {
-    font-size: 11px;
+    font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   }
   .finance-success {
     flex-wrap: wrap;
@@ -688,7 +688,7 @@
     break-inside: avoid;
   }
   .finance-document .brand {
-    color: #0f766e;
+    color: var(--color-brand-text);
   }
   .finance-document .document-signature {
     break-inside: avoid;

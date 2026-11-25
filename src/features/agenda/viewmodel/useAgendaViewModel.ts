@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from '../../access/viewmodel/useSessionViewModel';
+import { useBranding } from '../../branding/viewmodel/useBranding';
+import { fontScales } from '../../branding/model/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { agendaRoute } from '../../../app/router/router';
 import {
@@ -13,9 +15,13 @@ import { localDate } from '../../clinic/model/fixtures';
 import { minutes } from '../../clinic/model/validation';
 import type { Appointment } from '../../clinic/model/types';
 import { servicesOptions } from '../../services/model/services.queries';
+import { waitingMinutes, isWaitingOverdue, waitingAlertMinutes } from '../model/waiting.rules';
 
 export function useAgendaViewModel() {
   const session = useSession();
+  const branding = useBranding();
+  const timeScale =
+    (1.2 * (fontScales.find((s) => s.id === branding.config.fontScale)?.size ?? 14)) / 14;
   const search = agendaRoute.useSearch();
   const navigate = agendaRoute.useNavigate();
   const client = useQueryClient();
@@ -90,6 +96,7 @@ export function useAgendaViewModel() {
   const updateSearch = (next: Partial<typeof search>) =>
     void navigate({ search: (prev) => ({ ...prev, ...next }) });
   return {
+    timeScale,
     canEdit: session.can('agenda.edit'),
     canCancel: session.can('agenda.cancel'),
     rescheduleError: reschedule.error,
@@ -136,11 +143,9 @@ export function useAgendaViewModel() {
     waiting,
     selectedWaiting,
     setWaitingId,
-    waited: (appointment: Appointment) =>
-      Math.max(
-        0,
-        Math.floor((now.getTime() - new Date(appointment.arrivedAt ?? now).getTime()) / 60000),
-      ),
+    waited: (appointment: Appointment) => waitingMinutes(appointment, now),
+    isOverdue: (appointment: Appointment) => isWaitingOverdue(appointment, now),
+    waitingAlertMinutes,
     callPatient: () => {
       if (selectedWaiting && session.can('agenda.edit'))
         change.mutate({ id: selectedWaiting.id, status: 'in-progress' });
@@ -188,12 +193,12 @@ export function useAgendaViewModel() {
     timeLabel,
     opening,
     closing,
-    gridHeight: (closing - opening) * 1.2,
+    gridHeight: (closing - opening) * timeScale,
     nowPosition:
       localDate(now) === search.date &&
       now.getHours() * 60 + now.getMinutes() >= opening &&
       now.getHours() * 60 + now.getMinutes() < closing
-        ? (now.getHours() * 60 + now.getMinutes() - opening) * 1.2
+        ? (now.getHours() * 60 + now.getMinutes() - opening) * timeScale
         : null,
     step: (settings.data?.slotDuration ?? 30) * 60,
   };

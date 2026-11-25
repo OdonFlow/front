@@ -61,6 +61,7 @@ export interface AccessSettings {
   receptionExpenseCapCents: number;
 }
 export interface Session {
+  clinicId: string;
   user: User;
   permissions: PermissionSet;
   expiresAt: number;

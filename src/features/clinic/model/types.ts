@@ -2,8 +2,11 @@ import type { FinanceData } from '../../finance/model/types.ts';
 import type { ClinicalService } from '../../services/model/types.ts';
 import type { ManagementData } from '../../management/model/types.ts';
 import type { AccessData } from '../../access/model/types.ts';
+import type { BrandingRecord } from '../../branding/model/types.ts';
+import type { UserAppearance } from '../../appearance/model/appearance.ts';
 
 export interface User {
+  clinicId?: string;
   id: string;
   name: string;
   email: string;
@@ -86,6 +89,7 @@ export interface Anamnesis {
   notes: string;
 }
 export interface ClinicSettings {
+  id?: string;
   name: string;
   phone: string;
   email: string;
@@ -112,4 +116,6 @@ export interface Database {
   services?: ClinicalService[];
   management?: ManagementData;
   access?: AccessData;
+  branding?: Record<string, BrandingRecord>;
+  appearance?: Record<string, UserAppearance>;
 }

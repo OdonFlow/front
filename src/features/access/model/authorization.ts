@@ -14,7 +14,9 @@ export function authorizeRequest(
   body: Record<string, unknown> = {},
 ) {
   let permission: Permission | undefined;
-  if (path === '/team' || path.startsWith('/team/')) permission = 'users.manage';
+  if (path.startsWith('/clinics/') && path.includes('/branding') && method !== 'get')
+    permission = 'settings.manage';
+  else if (path === '/team' || path.startsWith('/team/')) permission = 'users.manage';
   else if (path.startsWith('/access/')) permission = 'permissions.manage';
   else if (path === '/commissions/own') permission = 'commissions.own';
   else if (path.startsWith('/management/')) permission = 'management.view';

@@ -24,10 +24,10 @@
   padding: 10px 12px;
   border: 1px solid var(--color-line);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(var(--font-size-base, 14px) * 13 / 14);
 }
 .management-filter summary span {
-  color: var(--color-brand-dark);
+  color: var(--color-brand-text);
   margin-left: 12px;
 }
 .management-filter-options {
@@ -46,20 +46,20 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: calc(var(--font-size-base, 14px) * 13 / 14);
   padding: 9px 0;
 }
 .management-filter-options input {
   width: 16px;
   height: 16px;
-  accent-color: var(--color-brand);
+  accent-color: var(--color-brand-text);
 }
 .management-period {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   color: var(--color-muted);
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   margin: 20px 0 12px;
   flex-wrap: wrap;
 }
@@ -77,26 +77,30 @@
   align-items: center;
   gap: 8px;
   color: var(--color-muted);
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
 }
 .management-kpi > strong {
   display: block;
-  font-size: clamp(21px, 2vw, 29px);
+  font-size: clamp(
+    calc(var(--font-size-base, 14px) * 21 / 14),
+    2vw,
+    calc(var(--font-size-base, 14px) * 29 / 14)
+  );
   margin: 14px 0 8px;
   letter-spacing: -0.7px;
 }
 .management-kpi p {
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   color: var(--color-muted);
   line-height: 1.6;
 }
 .management-kpi-profit {
   background: var(--color-brand-light);
-  border-color: var(--color-brand);
+  border-color: var(--color-brand-text);
 }
 .management-kpi-profit > strong,
 .management-kpi-profit > div {
-  color: var(--color-brand-dark);
+  color: var(--color-brand-text);
 }
 .management-kpi-loss > strong {
   color: #b91c1c;
@@ -110,10 +114,10 @@
   margin-top: 18px;
 }
 .management-goal strong {
-  font-size: 13px;
+  font-size: calc(var(--font-size-base, 14px) * 13 / 14);
 }
 .management-goal p {
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   color: var(--color-muted);
   margin-top: 5px;
 }
@@ -141,16 +145,16 @@
   gap: 12px;
 }
 .management-section-heading h2 {
-  font-size: 15px;
+  font-size: calc(var(--font-size-base, 14px) * 15 / 14);
   font-weight: 650;
 }
 .management-section-heading p {
   color: var(--color-muted);
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   margin-top: 6px;
 }
 .management-section-heading .field {
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   margin: 0;
 }
 .management-chart-scroll {
@@ -171,7 +175,7 @@
   stroke-width: 0.5;
 }
 .chart-label {
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   fill: var(--color-muted);
 }
 .chart-revenue {
@@ -196,7 +200,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 14px;
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   color: var(--color-muted);
   margin: 10px 12px;
 }
@@ -219,21 +223,21 @@
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   border-radius: 8px;
 }
 .management-chart-detail select {
   padding: 5px;
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   margin-left: 5px;
 }
 .management-chart-table {
   margin: 12px 22px;
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
 }
 .management-chart-table summary {
   cursor: pointer;
-  color: var(--color-brand-dark);
+  color: var(--color-brand-text);
 }
 .management-mini-stats {
   display: flex;
@@ -241,12 +245,12 @@
   padding: 20px 22px;
   justify-content: space-between;
   gap: 10px;
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   color: var(--color-muted);
 }
 .management-mini-stats strong {
   display: block;
-  font-size: 20px;
+  font-size: calc(var(--font-size-base, 14px) * 20 / 14);
   color: var(--color-ink);
   margin-top: 6px;
 }
@@ -280,7 +284,7 @@
   gap: 10px;
   padding: 13px 0;
   border-bottom: 1px solid var(--color-line);
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
 }
 .management-payments li > span:last-child {
   text-align: right;
@@ -295,7 +299,7 @@
 .management-payments small {
   display: block;
   color: var(--color-muted);
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   margin-top: 5px;
 }
 .management-fees {
@@ -303,7 +307,7 @@
   padding: 15px;
   background: var(--color-canvas);
   border-radius: 9px;
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
 }
 .management-fees span {
   display: flex;
@@ -313,12 +317,12 @@
 .management-fees p {
   margin-top: 9px;
   color: var(--color-muted);
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   line-height: 1.6;
 }
 .management-footnote {
   color: var(--color-muted);
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
   line-height: 1.8;
   margin: 18px 0;
 }
@@ -326,7 +330,7 @@
   margin: 16px 22px;
 }
 .management-bottom-grid .data-table {
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
 }
 .management-ranking {
   padding: 0 22px 20px;
@@ -339,23 +343,23 @@
   border-bottom: 1px solid var(--color-line);
 }
 .management-rank {
-  color: var(--color-brand-dark);
+  color: var(--color-brand-text);
   background: var(--color-brand-light);
   border-radius: 7px;
   padding: 6px 9px;
-  font-size: 11px;
+  font-size: calc(var(--font-size-base, 14px) * 11 / 14);
 }
 .management-ranking li > div:nth-child(2) {
   flex: 1;
   min-width: 0;
 }
 .management-ranking strong {
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
   display: block;
   overflow-wrap: anywhere;
 }
 .management-ranking span:not(.management-rank) {
-  font-size: 10px;
+  font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   color: var(--color-muted);
   display: block;
   margin-top: 5px;
@@ -408,7 +412,7 @@
   text-align: center;
   padding-top: 12px;
   width: min(350px, 100%);
-  font-size: 12px;
+  font-size: calc(var(--font-size-base, 14px) * 12 / 14);
 }
 .management-signature span {
   display: block;
@@ -440,7 +444,7 @@
     padding: 14px;
   }
   .management-kpi > strong {
-    font-size: 21px;
+    font-size: calc(var(--font-size-base, 14px) * 21 / 14);
   }
   .management-goal {
     align-items: stretch;
@@ -465,7 +469,7 @@
 }
 @media print {
   .management-report {
-    font-size: 10px;
+    font-size: calc(var(--font-size-base, 14px) * 10 / 14);
   }
   .management-report table {
     break-inside: auto;

@@ -91,10 +91,11 @@ function getDatabase(): Database {
   persist();
   return database;
 }
-function persist() {
+function persist(strict = false) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(database));
-  } catch {
+  } catch (error) {
+    if (strict && typeof localStorage !== 'undefined') throw error;
     /* Modo privado: persistência limitada à sessão. */
   }
 }
@@ -107,6 +108,11 @@ export const mockAdapter: AxiosAdapter = async (config) => {
   const path = (config.url ?? '').split('?')[0];
   const method = config.method?.toLowerCase() ?? 'get';
   const body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data;
+  const brandingWrite =
+    path.startsWith('/clinics/') && path.includes('/branding') && method !== 'get';
+  const previousBranding = brandingWrite ? structuredClone(db.branding) : undefined;
+  const appearanceWrite = path === '/profiles/me/preferences' && method === 'put';
+  const previousAppearance = appearanceWrite ? structuredClone(db.appearance) : undefined;
   let data: unknown;
   let status = 200;
   let session: Session | undefined;
@@ -431,7 +437,7 @@ export const mockAdapter: AxiosAdapter = async (config) => {
     )
       fail('Revise o nome, e-mail e horário de funcionamento.');
     else {
-      db.settings = settings;
+      db.settings = { ...settings, id: db.settings.id };
       data = settings;
     }
   } else fail('Operação não encontrada.', 404);
@@ -476,7 +482,24 @@ export const mockAdapter: AxiosAdapter = async (config) => {
       };
     }
   }
-  persist();
+  if (brandingWrite && status < 400) {
+    try {
+      persist(true);
+    } catch {
+      db.branding = previousBranding;
+      fail(
+        'Não foi possível armazenar a marca. Libere espaço no navegador ou use imagens menores.',
+        507,
+      );
+    }
+  } else if (appearanceWrite && status < 400) {
+    try {
+      persist(true);
+    } catch {
+      db.appearance = previousAppearance;
+      fail('Não foi possível armazenar sua preferência. Verifique o espaço no navegador.', 507);
+    }
+  } else persist();
   const response: AxiosResponse = {
     data: structuredClone(data),
     status,

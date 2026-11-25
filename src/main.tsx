@@ -9,6 +9,8 @@ import './features/finance/view/finance.css';
 import './features/services/view/services.css';
 import './features/management/view/management.css';
 import './features/access/view/access.css';
+import './features/branding/view/branding.css';
+import './features/appearance/view/appearance.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Elemento raiz não encontrado.');

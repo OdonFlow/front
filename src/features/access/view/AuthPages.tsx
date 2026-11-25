@@ -4,6 +4,7 @@ import { loginRoute, resetRoute } from '../../../app/router/router';
 import { Icon } from '../../../shared/components/Icon';
 import { Feedback, Field, QueryState } from '../../../shared/components/ui';
 import { useAuthViewModel, useMailboxViewModel } from '../viewmodel/useAuthViewModel';
+import { ClinicBrand } from '../../branding/view/ClinicBrand';
 
 function AuthCard({
   title,
@@ -17,12 +18,7 @@ function AuthCard({
   return (
     <div className="auth-container">
       <section className="auth-card">
-        <div className="brand">
-          <span className="brand-mark">
-            <Icon name="tooth" />
-          </span>
-          OdontoFlow
-        </div>
+        <ClinicBrand />
         <header>
           <h1>{title}</h1>
           <p>{subtitle}</p>

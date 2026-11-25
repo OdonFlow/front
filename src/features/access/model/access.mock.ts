@@ -125,6 +125,7 @@ export async function authenticate(
   if (!data) throw new AccessError('Entre para continuar.', 401);
   return {
     user,
+    clinicId: user.clinicId ?? db.settings.id ?? 'demo-clinic',
     permissions: effectivePermissions(user.role, data.policy[user.role]),
     expiresAt: session.expiresAt,
     ...data.settings,
@@ -286,6 +287,7 @@ export function saveTeamUser(db: Database, input: TeamInput, actor: User, id?: s
     throw new AccessError('Mantenha ao menos um administrador ativo.');
   const user: User = {
     ...input,
+    clinicId: old?.clinicId ?? actor.clinicId ?? db.settings.id ?? 'demo-clinic',
     name: input.name.trim(),
     email,
     cro: input.role === 'dentist' ? input.cro.trim().toUpperCase() : '',

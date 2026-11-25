@@ -1,6 +1,7 @@
 import type { Prescription, User } from '../../../clinic/model/types';
 import { formatDate } from '../../../clinic/model/validation';
 import { Icon } from '../../../../shared/components/Icon';
+import { ClinicBrand } from '../../../branding/view/ClinicBrand';
 interface Props {
   prescriptions: Prescription[];
   dentist: (id: string) => User | undefined;
@@ -26,6 +27,9 @@ export function Prescriptions({ prescriptions, dentist, onAdd, readOnly = false 
         <div className="prescription-list">
           {prescriptions.map((rx) => (
             <article className="panel prescription-card" key={rx.id}>
+              <div className="prescription-clinic-brand">
+                <ClinicBrand />
+              </div>
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <span className="feature-icon">

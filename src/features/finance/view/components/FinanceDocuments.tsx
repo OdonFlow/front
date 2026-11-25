@@ -1,5 +1,6 @@
 ﻿import { AccessGate } from '../../../access/view/AccessGate';
 import { Icon } from '../../../../shared/components/Icon';
+import { ClinicBrand } from '../../../branding/view/ClinicBrand';
 import { createPortal } from 'react-dom';
 import type { ReactNode } from 'react';
 import { Dialog } from '../../../../shared/components/ui';
@@ -31,7 +32,7 @@ export function ClosingDocument({
     <article className="finance-document finance-report">
       <header className="finance-document-heading">
         <div>
-          <span className="brand">{clinic?.name ?? 'OdontoFlow'}</span>
+          <ClinicBrand name={clinic?.name} />
           <h2>Borderô de fechamento de turno</h2>
         </div>
         <span className="badge badge-teal">

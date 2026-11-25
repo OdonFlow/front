@@ -1,4 +1,5 @@
 import { Prescriptions } from './components/Prescriptions';
+import { ClinicBrand } from '../../branding/view/ClinicBrand';
 import { TreatmentPlan } from './components/TreatmentPlan';
 import { AnamnesisForm } from './components/AnamnesisForm';
 import { EvolutionHistory } from './components/EvolutionHistory';
@@ -79,6 +80,9 @@ export function RecordsPage() {
       >
         {vm.patient && vm.record && (
           <div key={vm.patient.id} className="record-content">
+            <div className="record-print-brand">
+              <ClinicBrand />
+            </div>
             <section className="panel patient-summary">
               <div className="flex items-center gap-4">
                 <Avatar name={vm.patient.name} large />

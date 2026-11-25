@@ -25,13 +25,25 @@ import { isValidDate } from '../../features/clinic/model/validation';
 import { FinancePage } from '../../features/finance/view/FinancePage';
 import { serviceCategories } from '../../features/services/model/types';
 import { normalizeDashboardSearch } from '../../features/management/model/periods';
+import {
+  brandingOptions,
+  publicBrandingOptions,
+} from '../../features/branding/model/branding.queries';
+import { appearanceOptions } from '../../features/appearance/model/appearance.queries';
 
 const rootRoute = createRootRoute({
   component: RootLayout,
   beforeLoad: async ({ location }) => {
-    if (publicPaths.includes(location.pathname)) return;
+    if (publicPaths.includes(location.pathname)) {
+      await queryClient.ensureQueryData(publicBrandingOptions).catch(() => undefined);
+      return;
+    }
     const session = await queryClient.fetchQuery(sessionOptions);
     if (!session) throw redirect({ to: '/login', search: { redirect: location.href, reason: '' } });
+    await queryClient.ensureQueryData(brandingOptions(session.clinicId)).catch(() => undefined);
+    await queryClient
+      .ensureQueryData(appearanceOptions(session.clinicId, session.user.id))
+      .catch(() => undefined);
     const permission = pathPermission(location.pathname);
     if (permission && !can(session, permission)) throw redirect({ to: '/sem-acesso' });
   },
@@ -112,6 +124,14 @@ export const settingsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/configuracoes',
   component: SettingsPage,
+});
+export const brandingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/configuracoes/identidade-visual',
+  component: lazyRouteComponent(
+    () => import('../../features/branding/view/BrandingPage'),
+    'BrandingPage',
+  ),
 });
 export const financeRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -254,6 +274,7 @@ const routeTree = rootRoute.addChildren([
   recordsRoute,
   dentistsRoute,
   settingsRoute,
+  brandingRoute,
   financeRoute,
   receiptsRoute,
   servicesRoute,

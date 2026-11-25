@@ -18,6 +18,8 @@ import {
 import { authorizeRequest, ownCommissions } from './authorization.ts';
 import { setDemoCookie, clearDemoCookie } from './demoCookie.ts';
 import type { AccessSettings, PermissionSet, Role, TeamInput, Session } from './types.ts';
+import { dispatchBranding, publicBranding } from '../../branding/model/branding.dispatcher.ts';
+import { getAppearance, saveAppearance } from '../../appearance/model/appearance.mock.ts';
 interface Body extends Partial<TeamInput> {
   token?: string;
   password?: string;
@@ -39,6 +41,7 @@ export async function dispatchAccess(
   token: string,
   device: string,
 ): Promise<{ handled: boolean; data?: unknown; status?: number; session?: Session }> {
+  if (path === '/public/branding' && method === 'get') return publicBranding(db);
   if (path.startsWith('/auth/')) {
     let data: unknown;
     if (path === '/auth/login' && method === 'post') {
@@ -76,6 +79,17 @@ export async function dispatchAccess(
   }
   const session = await authenticate(db, token);
   authorizeRequest(db, session, path, method, body as Record<string, unknown>);
+  if (path === '/profiles/me/preferences') {
+    if (method !== 'get' && method !== 'put')
+      throw new AccessError('Operação não encontrada.', 404);
+    return {
+      handled: true,
+      data: method === 'get' ? getAppearance(db, session) : saveAppearance(db, session, body),
+      session,
+    };
+  }
+  const branding = await dispatchBranding(db, session, path, method, body);
+  if (branding) return branding;
   if (path === '/team' && method === 'get') return { handled: true, data: db.users, session };
   if ((path === '/team' && method === 'post') || (/^\/team\/[^/]+$/.test(path) && method === 'put'))
     return {

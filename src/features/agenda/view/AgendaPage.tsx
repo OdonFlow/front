@@ -125,7 +125,7 @@ export function AgendaPage() {
                 <div className="calendar-body" style={{ height: vm.gridHeight }}>
                   <div className="time-column">
                     {vm.hours.map((hour) => (
-                      <span key={hour} style={{ top: (hour - vm.opening) * 1.2 }}>
+                      <span key={hour} style={{ top: (hour - vm.opening) * vm.timeScale }}>
                         {vm.timeLabel(hour)}
                       </span>
                     ))}
@@ -137,8 +137,8 @@ export function AgendaPage() {
                           key={hour}
                           className="calendar-slot"
                           style={{
-                            top: (hour - vm.opening) * 1.2,
-                            height: Math.min(60, vm.closing - hour) * 1.2,
+                            top: (hour - vm.opening) * vm.timeScale,
+                            height: Math.min(60, vm.closing - hour) * vm.timeScale,
                           }}
                           aria-label={`Agendar com ${dentist.name} às ${vm.timeLabel(hour)}`}
                           onClick={() => vm.openForm(dentist.id, vm.timeLabel(hour))}
@@ -151,14 +151,16 @@ export function AgendaPage() {
                             key={appointment.id}
                             className={`appointment appointment-${appointment.status}`}
                             style={{
-                              top: Math.max(0, minutes(appointment.time) - vm.opening) * 1.2 + 3,
+                              top:
+                                Math.max(0, minutes(appointment.time) - vm.opening) * vm.timeScale +
+                                3,
                               height: Math.max(
                                 36,
                                 Math.min(
                                   appointment.duration,
                                   vm.closing - minutes(appointment.time),
                                 ) *
-                                  1.2 -
+                                  vm.timeScale -
                                   6,
                               ),
                             }}
@@ -218,7 +220,7 @@ export function AgendaPage() {
                 vm.waiting.map((a) => (
                   <button
                     key={a.id}
-                    className={`waiting-item ${vm.selectedWaiting?.id === a.id ? 'selected' : ''}`}
+                    className={`waiting-item ${vm.selectedWaiting?.id === a.id ? 'selected' : ''} ${vm.isOverdue(a) ? 'is-overdue' : ''}`}
                     onClick={() => vm.setWaitingId(a.id)}
                     aria-pressed={vm.selectedWaiting?.id === a.id}
                   >
@@ -227,7 +229,13 @@ export function AgendaPage() {
                       <strong>{vm.patientName(a.patientId)}</strong>
                       <span>{vm.dentistName(a.dentistId)}</span>
                     </span>
-                    <span className="wait-duration">{vm.waited(a)} min</span>
+                    <span
+                      className="wait-duration"
+                      title={vm.isOverdue(a) ? 'Espera acima do tempo esperado' : undefined}
+                    >
+                      {vm.isOverdue(a) && '⚠ '}
+                      {vm.waited(a)} min
+                    </span>
                   </button>
                 ))
               )}
@@ -243,7 +251,8 @@ export function AgendaPage() {
               {vm.change.isPending ? 'Chamando...' : 'Chamar paciente'}
             </button>
             <div className="waiting-note">
-              <Icon name="clock" size={15} />O tempo é contado desde a chegada.
+              <Icon name="clock" size={15} />
+              Destaque a partir de {vm.waitingAlertMinutes} min desde a chegada.
             </div>
           </aside>
         </div>

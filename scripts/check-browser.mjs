@@ -165,6 +165,12 @@ try {
       `location.pathname!=='/login' && !!document.querySelector('.sidebar') && !document.querySelector('.spinner')`,
     );
   }
+  async function uploadBrand(selector, path) {
+    const { root } = await command('DOM.getDocument');
+    const { nodeId } = await command('DOM.querySelector', { nodeId: root.nodeId, selector });
+    assert.ok(nodeId, `Campo de upload ausente: ${selector}`);
+    await command('DOM.setFileInputFiles', { nodeId, files: [path] });
+  }
   await command('Page.enable');
   await command('Runtime.enable');
   await command('Emulation.setDeviceMetricsOverride', {
@@ -179,6 +185,81 @@ try {
   await signIn('admin@odontoflow.com');
   await waitFor(
     `location.pathname==='/gestao-financeira' && document.querySelectorAll('.management-kpi').length===4`,
+  );
+  await waitFor(
+    `document.querySelector('.layout-dark-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar')).backgroundColor`),
+    'rgb(30, 41, 59)',
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.app-shell')).backgroundColor`),
+    'rgb(248, 250, 252)',
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.nav-link.active')).color`),
+    'rgb(255, 255, 255)',
+  );
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-light-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar')).backgroundColor`),
+    'rgb(255, 255, 255)',
+  );
+  await reloadPage();
+  await waitFor(
+    `document.querySelector('.layout-light-sidebar') && document.querySelector('.theme-toggle').getAttribute('aria-label')==='Ativar tema escuro'`,
+  );
+  await screenshot('layout-clinico-claro-desktop.png');
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-dark-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  await screenshot('layout-triade-desktop.png');
+  assert.equal(await evaluate(`!!document.querySelector('.appearance-toolbar')`), false);
+  await evaluate(`document.querySelector('[aria-label="Recolher menu lateral"]').click()`);
+  await waitFor(`document.querySelector('.sidebar-collapsed')`);
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar')).width`),
+    '76px',
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.main-content')).marginLeft`),
+    '76px',
+  );
+  assert.equal(
+    await evaluate(
+      `[...document.querySelectorAll('.nav-link')].every(link=>link.title && link.getAttribute('aria-label'))`,
+    ),
+    true,
+  );
+  await screenshot('menu-recolhido-desktop.png');
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-light-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  assert.ok(await evaluate(`!!document.querySelector('.sidebar-collapsed')`));
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-dark-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  await evaluate(`document.querySelector('nav a[href="/configuracoes"]').click()`);
+  await waitFor(
+    `location.pathname==='/configuracoes' && document.querySelector('h1')?.textContent==='Configura\u00e7\u00f5es'`,
+  );
+  assert.ok(await evaluate(`!!document.querySelector('.sidebar-collapsed')`));
+  await evaluate(`document.querySelector('[aria-label="Expandir menu lateral"]').click()`);
+  await waitFor(`!document.querySelector('.sidebar-collapsed')`);
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar')).width`),
+    '220px',
+  );
+
+  process.stdout.write(
+    'PASS: tríade, menu escuro, canvas claro, texto branco e preferência pessoal persistente\n',
   );
   await navigate('/agenda');
   await waitFor(`document.querySelectorAll('.appointment').length===11`);
@@ -303,6 +384,149 @@ try {
     `(()=>{const f=document.querySelector('.settings-form');f.elements.namedItem('name').value='OdontoFlow Teste';f.requestSubmit()})()`,
   );
   await waitFor(`document.querySelector('.brand').textContent.includes('OdontoFlow Teste')`);
+  await navigate('/configuracoes/identidade-visual');
+  await evaluate(
+    `document.querySelectorAll('[aria-label="Layout padrão da clínica"] button')[0].click()`,
+  );
+  await setInput('[aria-label="Cor secundária HEX"]', '#25364D');
+  await setInput('[aria-label="Cor terciária HEX"]', '#D97706');
+  await waitFor(`document.querySelector('.triad-preview:not(.triad-preview-dark)')`);
+  assert.ok(await evaluate(`!!document.querySelector('.layout-dark-sidebar')`));
+  const rootPrimary = await evaluate(
+    `getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim()`,
+  );
+  await evaluate(`document.querySelectorAll('[aria-label="Temas rápidos"] button')[1].click()`);
+  await waitFor(
+    `getComputedStyle(document.querySelector('.brand-live-preview')).getPropertyValue('--color-primary').trim()==='#1E3A8A'`,
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim()`,
+    ),
+    rootPrimary,
+  );
+  await setInput('[aria-label="Cor primária HEX"]', '#FFFF00');
+  await waitFor(`!!document.querySelector('.contrast-warning')`);
+  await waitFor(
+    `getComputedStyle(document.querySelector('.brand-preview-appointment button')).color==='rgb(255, 255, 255)'`,
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.querySelector('.brand-preview-appointment button')).color`,
+    ),
+    'rgb(255, 255, 255)',
+  );
+  await setInput('[aria-label="Cor primária HEX"]', '#ZZZZZZ');
+  assert.equal(
+    await evaluate(
+      `document.querySelector('.branding-actions button[type="submit"], .branding-actions button:not([type])').disabled`,
+    ),
+    true,
+  );
+  await evaluate(`document.querySelectorAll('[aria-label="Temas rápidos"] button')[3].click()`);
+  await evaluate(`document.querySelectorAll('[aria-label="Escala de fontes"] button')[2].click()`);
+  const brandLogo = join(profile, 'clinica-marca.svg');
+  const brandIcon = join(profile, 'clinica-icone.svg');
+  const unsafeLogo = join(profile, 'inseguro.svg');
+  await writeFile(
+    brandLogo,
+    '<svg xmlns="http://www.w3.org/2000/svg" width="280" height="64" viewBox="0 0 280 64"><rect x="2" y="2" width="60" height="60" rx="12" fill="#9F1239"/><text x="78" y="41" font-family="Arial" font-size="25" fill="#0F172A">Clínica Sorriso</text></svg>',
+  );
+  await writeFile(
+    brandIcon,
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#9F1239"/><path d="M16 32h32M32 16v32" stroke="#fff" stroke-width="7"/></svg>',
+  );
+  await writeFile(
+    unsafeLogo,
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" onload="alert(1)"><rect width="64" height="64"/></svg>',
+  );
+  await uploadBrand('[aria-label="Carregar Logo horizontal"]', brandLogo);
+  await waitFor(
+    `!!document.querySelector('.brand-upload img') && !document.body.textContent.includes('Processando…')`,
+  );
+  await uploadBrand('[aria-label="Carregar Ícone / Favicon"]', brandIcon);
+  await waitFor(
+    `document.querySelectorAll('.brand-upload img').length===2 && !document.body.textContent.includes('Processando…')`,
+  );
+  await screenshot('identidade-visual-previa-desktop.png');
+  await uploadBrand('[aria-label="Carregar Logo horizontal"]', unsafeLogo);
+  await waitFor(
+    `document.querySelector('.feedback-error')?.textContent.includes('não permitidos')`,
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim()`,
+    ),
+    rootPrimary,
+  );
+  await uploadBrand('[aria-label="Carregar Logo horizontal"]', brandLogo);
+  await waitFor(
+    `!document.querySelector('.feedback-error') && !document.body.textContent.includes('Processando…')`,
+  );
+  await clickText('Salvar e aplicar identidade');
+  await waitFor(
+    `document.body.textContent.includes('Identidade visual salva') && getComputedStyle(document.documentElement).getPropertyValue('--font-size-base').trim()==='16px'`,
+  );
+  await waitFor(`document.querySelector('.layout-dark-sidebar')`);
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--color-secondary').trim()`,
+    ),
+    '#25364D',
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--color-tertiary').trim()`,
+    ),
+    '#D97706',
+  );
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-light-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-dark-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar')).backgroundColor`),
+    'rgb(37, 54, 77)',
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim()`,
+    ),
+    '#9F1239',
+  );
+  assert.equal(
+    await evaluate(
+      `document.querySelector('link[rel="icon"]').href.startsWith('data:image/svg+xml')`,
+    ),
+    true,
+  );
+  await reloadPage();
+  await waitFor(
+    `!!document.querySelector('.sidebar .clinic-brand-logo') && getComputedStyle(document.documentElement).getPropertyValue('--font-size-base').trim()==='16px'`,
+  );
+  await evaluate(`document.querySelectorAll('[aria-label="Escala de fontes"] button')[0].click()`);
+  await waitFor(
+    `getComputedStyle(document.querySelector('.brand-live-preview')).getPropertyValue('--font-size-base').trim()==='13px'`,
+  );
+  assert.equal(
+    await evaluate(
+      `getComputedStyle(document.documentElement).getPropertyValue('--font-size-base').trim()`,
+    ),
+    '16px',
+  );
+  await clickText('Descartar alterações');
+  await navigate('/login');
+  await waitFor(`!!document.querySelector('.auth-card .clinic-brand-logo')`);
+  assert.equal(await evaluate(`!!document.querySelector('.auth-card .clinic-brand-logo')`), true);
+  await navigate('/configuracoes/identidade-visual');
+  await screenshot('identidade-visual-aplicada-desktop.png');
+  process.stdout.write(
+    'PASS: prévia isolada, paletas, contraste, fontes, upload seguro, persistência e marca no login\n',
+  );
   await navigate('/pacientes?q=sem-resultado-inexistente');
   assert.ok(await evaluate(`document.body.textContent.includes('Nenhum resultado encontrado')`));
   await navigate('/agenda?date=2026-13-99');
@@ -723,6 +947,7 @@ try {
     '/gestao-financeira',
     '/equipe',
     '/permissoes',
+    '/configuracoes/identidade-visual',
   ]) {
     await navigate(path);
     assert.equal(await evaluate(`document.querySelectorAll('.nav-link.active').length`), 1);
@@ -735,6 +960,36 @@ try {
     );
     await screenshot(`${path.split('?')[0].slice(1).replaceAll('/', '-')}-mobile.png`);
   }
+  await evaluate(`document.querySelector('[aria-label="Abrir menu"]').click()`);
+  await waitFor(
+    `document.querySelector('.sidebar-open') && document.querySelector('.theme-toggle').getBoundingClientRect().left >= 0`,
+  );
+  assert.equal(
+    await evaluate(`getComputedStyle(document.querySelector('.sidebar-collapse-toggle')).display`),
+    'none',
+  );
+  assert.ok(
+    await evaluate(`document.querySelector('.theme-toggle').getBoundingClientRect().left >= 0`),
+  );
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-light-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  await screenshot('menu-tema-claro-mobile.png');
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  await waitFor(
+    `document.querySelector('.layout-dark-sidebar') && !document.querySelector('.theme-toggle').disabled`,
+  );
+  await evaluate(`document.querySelector('.sidebar-mobile-close').click()`);
+  await waitFor(
+    `!document.querySelector('.sidebar-open') && !document.querySelector('.sidebar-overlay')`,
+  );
+  await clickText('Restaurar padrão OdontoFlow');
+  await waitFor(`!!document.querySelector('dialog[open]')`);
+  await clickText('Restaurar e aplicar');
+  await waitFor(
+    `!document.querySelector('dialog[open]') && !document.querySelector('.sidebar .clinic-brand-logo') && getComputedStyle(document.documentElement).getPropertyValue('--font-size-base').trim()==='14px'`,
+  );
   await evaluate(`document.querySelector('[aria-label="Abrir menu"]').click()`);
   assert.ok(await evaluate(`!!document.querySelector('.sidebar-open')`));
   assert.deepEqual(errors, []);
@@ -789,7 +1044,7 @@ try {
   await waitFor(`location.pathname==='/login'`);
   assert.deepEqual(errors, []);
   process.stdout.write(
-    'PASS: onze páginas responsivas, autenticação, convites, recuperação e isolamento dos três perfis\n',
+    'PASS: doze páginas responsivas, marca restaurada, autenticação, convites, recuperação e isolamento dos três perfis\n',
   );
 } finally {
   socket?.close();
